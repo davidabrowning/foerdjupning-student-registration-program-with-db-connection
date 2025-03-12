@@ -12,5 +12,10 @@ namespace StudentRegistrationProgramWithDBConnection
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string City { get; set; } = "";
+
+        public override string? ToString()
+        {
+            return $"#{StudentId} {FirstName} {LastName} ({City})";
+        }
     }
 }
