@@ -59,6 +59,7 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintTitle("Registerar ny student...");
             Student student = GetNewStudentFromUser();
             databaseTransfer.Add(student);
+            printer.PrintSuccess("Ny student registerad.");
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
@@ -75,34 +76,27 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             printer.PrintTitle("Ändrar existerande student");
             printer.PrintList<Student>(databaseTransfer.AllStudents());
-            int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId);
-
-            if (int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId))
-            {
-                Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
-                if (originalStudent != null)
-                {
-                    Student updatedStudentInfo = GetNewStudentFromUser();
-                    databaseTransfer.Update(originalStudent, updatedStudentInfo);
-                }
-                else
-                {
-                    printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
-                }
-            }
+            int idToEdit = keyboard.GetIntInput("Student att ändra (ange student id-nummer): ");
+            if (databaseTransfer.IsValidStudentId(idToEdit))
+                EditStudent(idToEdit);
             else
-            {
                 printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
-            }
-
             printer.ConfirmToContinue();
             ShowMainMenu();
+        }
+        private void EditStudent(int studentId)
+        {
+            Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student updatedStudentInfo = GetNewStudentFromUser();
+            databaseTransfer.Update(originalStudent, updatedStudentInfo);
+            printer.PrintSuccess("Student uppdaterad.");
         }
         public void ShowStudentList()
         {
             printer.PrintTitle("Listar alla studenter");
             foreach (Student student in databaseTransfer.AllStudents())
                printer.PrintMessage(student.ToString());
+            printer.PrintSuccess("Listan klar.");
             printer.ConfirmToContinue();
             ShowMainMenu();
         }

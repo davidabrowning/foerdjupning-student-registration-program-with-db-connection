@@ -13,6 +13,14 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             this.prompter = prompter;
         }
+        public int GetIntInput(string prompt)
+        {
+            prompter.PrintPrompt(prompt);
+            if (int.TryParse(prompt, out int result))
+                return result;
+            else 
+                return -1;
+        }
         public string GetStringInput()
         {
             return (Console.ReadLine() ?? "").Trim();
