@@ -9,7 +9,7 @@ namespace StudentRegistrationProgramWithDBConnection
     internal class Printer
     {
         private ConsoleColor defaultColor = ConsoleColor.White;
-        private void Clear() => Console.Clear();
+        public void Clear() => Console.Clear();
         private void Print(string text, ConsoleColor textColor)
         {
             Console.ForegroundColor = textColor;
