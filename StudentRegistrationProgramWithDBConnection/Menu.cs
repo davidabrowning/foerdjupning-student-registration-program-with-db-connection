@@ -50,27 +50,30 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowRegistrationMenu()
         {
             printer.PrintTitle("Registerar ny student...");
-
-            // Get student info
+            Student student = GetNewStudentFromUser();
+            AddToDatabase(student);
+            printer.ConfirmToContinue();
+            ShowMainMenu();
+        }
+        private Student GetNewStudentFromUser()
+        {
             printer.PrintPrompt("Förnamn: ");
             string firstName = Console.ReadLine();
             printer.PrintPrompt("Efternamn: ");
             string lastName = Console.ReadLine();
             printer.PrintPrompt("Stad: ");
             string city = Console.ReadLine();
-            Student student = new Student()
+            return new Student()
             {
                 FirstName = firstName,
                 LastName = lastName,
                 City = city
             };
-
-            // Add student to database
+        }
+        private void AddToDatabase(Student student)
+        {
             dbContext.Add(student);
             dbContext.SaveChanges();
-
-            printer.ConfirmToContinue();
-            ShowMainMenu();
         }
         public void ShowEditMenu()
         {
@@ -85,15 +88,10 @@ namespace StudentRegistrationProgramWithDBConnection
                 Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
                 if (student != null)
                 {
-                    printer.PrintPrompt("Förnamn: ");
-                    string firstName = Console.ReadLine();
-                    printer.PrintPrompt("Efternamn: ");
-                    string lastName = Console.ReadLine();
-                    printer.PrintPrompt("Stad: ");
-                    string city = Console.ReadLine();
-                    student.FirstName = firstName;
-                    student.LastName = lastName;
-                    student.City = city;
+                    Student updatedStudentInfo = GetNewStudentFromUser();
+                    student.FirstName = updatedStudentInfo.FirstName;
+                    student.LastName = updatedStudentInfo.LastName;
+                    student.City = updatedStudentInfo.City;
                     dbContext.SaveChanges();
                 }
                 else
