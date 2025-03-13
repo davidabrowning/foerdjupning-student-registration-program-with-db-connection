@@ -9,6 +9,7 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
+        private Printer printer = new Printer();
         private StudentRegistrationProgramWithDBConnectionDBContext dbContext
             = new StudentRegistrationProgramWithDBConnectionDBContext();
         public void Go()
@@ -17,12 +18,12 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Huvudmeny");
-            Console.WriteLine("[1] Registrera ny student");
-            Console.WriteLine("[2] Ändra student");
-            Console.WriteLine("[3] Lista alla studenter");
-            Console.WriteLine("[Q] Avsluta programmet");
+            printer.PrintTitle("Huvudmeny)");
+            printer.PrintMessage("[1] Registrera ny student");
+            printer.PrintMessage("[2] Ändra student");
+            printer.PrintMessage("[3] Lista alla studenter");
+            printer.PrintMessage("[Q] Avsluta programmet");
+            printer.PrintPrompt("Ditt val: ");
             HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
@@ -36,29 +37,26 @@ namespace StudentRegistrationProgramWithDBConnection
                     ShowEditMenu();
                     break;
                 case "3":
-                    ListAllStudents();
+                    ShowStudentList();
                     break;
                 case "Q":
-                    QuitProgram();
+                    ShowQuitProgram();
                     break;
                 default:
-                    Console.WriteLine("Oväntad inmatning.");
-                    ConfirmToContinue();
-                    ShowMainMenu();
+                    ShowInvalidMenuInput();
                     break;
             }
         }
         public void ShowRegistrationMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Registerar ny student...");
+            printer.PrintTitle("Registerar ny student...");
 
             // Get student info
-            Console.Write("Förnamn: ");
+            printer.PrintPrompt("Förnamn: ");
             string firstName = Console.ReadLine();
-            Console.Write("Efternamn: ");
+            printer.PrintPrompt("Efternamn: ");
             string lastName = Console.ReadLine();
-            Console.Write("Stad: ");
+            printer.PrintPrompt("Stad: ");
             string city = Console.ReadLine();
             Student student = new Student()
             {
@@ -71,30 +69,27 @@ namespace StudentRegistrationProgramWithDBConnection
             dbContext.Add(student);
             dbContext.SaveChanges();
 
-            ConfirmToContinue();
+            printer.ConfirmToContinue();
             ShowMainMenu();
         }
         public void ShowEditMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Ändrar existerande student");
+            printer.PrintTitle("Ändrar existerande student");
 
             foreach (Student student in dbContext.Students)
-            {
-                Console.WriteLine(student);
-            }
+                printer.PrintMessage(student.ToString());
 
-            Console.Write("Student att ändra (ange student id-nummer): ");
+            printer.PrintPrompt("Student att ändra (ange student id-nummer): ");
             if (int.TryParse(Console.ReadLine(), out int studentId))
             {
                 Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
                 if (student != null)
                 {
-                    Console.Write("Förnamn: ");
+                    printer.PrintPrompt("Förnamn: ");
                     string firstName = Console.ReadLine();
-                    Console.Write("Efternamn: ");
+                    printer.PrintPrompt("Efternamn: ");
                     string lastName = Console.ReadLine();
-                    Console.Write("Stad: ");
+                    printer.PrintPrompt("Stad: ");
                     string city = Console.ReadLine();
                     student.FirstName = firstName;
                     student.LastName = lastName;
@@ -103,39 +98,38 @@ namespace StudentRegistrationProgramWithDBConnection
                 }
                 else
                 {
-                    Console.WriteLine("Lyckades inte hitta student med detta id-nummer.");
+                    printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
                 }
             }
             else
             {
-                Console.WriteLine("Lyckades inte hitta student med detta id-nummer.");
+                printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
             }
 
-            ConfirmToContinue();
+            printer.ConfirmToContinue();
             ShowMainMenu();
         }
-        public void ListAllStudents()
+        public void ShowStudentList()
         {
-            Console.Clear();
-            Console.WriteLine("Listar alla studenter");
-
+            printer.PrintTitle("Listar alla studenter");
             foreach (Student student in dbContext.Students)
-            {
-                Console.WriteLine(student);
-            }
-
-            ConfirmToContinue();
+               printer.PrintMessage(student.ToString());
+            printer.ConfirmToContinue();
             ShowMainMenu();
         }
-        public void QuitProgram()
+        public void ShowQuitProgram()
         {
-            Console.Clear();
-            Console.WriteLine("Tack och hej då!");
+            printer.PrintTitle("Avsluta programmet");
+            printer.PrintMessage("Tack och hej då!");
+            printer.ConfirmToContinue();
         }
-        public void ConfirmToContinue()
+
+        public void ShowInvalidMenuInput()
         {
-            Console.WriteLine("Tryck ENTER för att fortsätta.");
-            Console.ReadLine();
+            printer.PrintTitle("Oväntad inmatning");
+            printer.PrintWarning("Oväntad inmatning. Försök igen.");
+            printer.ConfirmToContinue();
+            ShowMainMenu();
         }
     }
 }
