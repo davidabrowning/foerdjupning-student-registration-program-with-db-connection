@@ -27,5 +27,9 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             return dbContext.Students;
         }
+        public bool IsValidStudentId(int studentId)
+        {
+            return dbContext.Students.Where(s => s.StudentId == studentId).Any();
+        }
     }
 }
