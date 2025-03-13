@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Menu menu = new Menu();
-            menu.Go();
+            ProgramLauncher programLauncher = new ProgramLauncher();
+            programLauncher.Go();
         }
     }
 }
