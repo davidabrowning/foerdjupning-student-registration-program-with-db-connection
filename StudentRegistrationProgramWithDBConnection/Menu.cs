@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             this.printer = printer;
             this.keyboard = keyboard;
-            this.dbContext = dbContext;
+            this.databaseTransfer = databaseTransfer;
         }
         public void Go()
         {
@@ -73,7 +74,8 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             printer.PrintTitle(RegisterMenuTitle);
             Student student = GetNewStudentFromUser();
-            AddToDatabase(student);
+            databaseTransfer.Add(student);
+            printer.PrintSuccess("Ny student registerad.");
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
@@ -86,47 +88,31 @@ namespace StudentRegistrationProgramWithDBConnection
                 City = keyboard.GetStringInput(PromptCity)
             };
         }
-        private void AddToDatabase(Student student)
-        {
-            dbContext.Add(student);
-            dbContext.SaveChanges();
-        }
         public void ShowEditMenu()
         {
-            printer.PrintTitle(EditMenuTitle);
-
-            foreach (Student student in dbContext.Students)
-                printer.PrintMessage(student.ToString());
-
-            if (int.TryParse(keyboard.GetStringInput(EditMenuPromptStudentId), out int studentId))
-            {
-                Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
-                if (student != null)
-                {
-                    Student updatedStudentInfo = GetNewStudentFromUser();
-                    student.FirstName = updatedStudentInfo.FirstName;
-                    student.LastName = updatedStudentInfo.LastName;
-                    student.City = updatedStudentInfo.City;
-                    dbContext.SaveChanges();
-                }
-                else
-                {
-                    printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
-                }
-            }
+            printer.PrintTitle("Ändrar existerande student");
+            printer.PrintList<Student>(databaseTransfer.AllStudents());
+            int idToEdit = keyboard.GetIntInput("Student att ändra (ange student id-nummer): ");
+            if (databaseTransfer.IsValidStudentId(idToEdit))
+                EditStudent(idToEdit);
             else
-            {
                 printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
-            }
-
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
+        private void EditStudent(int studentId)
+        {
+            Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student updatedStudentInfo = GetNewStudentFromUser();
+            databaseTransfer.Update(originalStudent, updatedStudentInfo);
+            printer.PrintSuccess("Student uppdaterad.");
+        }
         public void ShowStudentList()
         {
-            printer.PrintTitle(ListAllMenuTitle);
-            foreach (Student student in dbContext.Students)
+            printer.PrintTitle("Listar alla studenter");
+            foreach (Student student in databaseTransfer.AllStudents())
                printer.PrintMessage(student.ToString());
+            printer.PrintSuccess("Listan klar.");
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
@@ -135,6 +121,7 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintTitle(QuitMenuTitle);
             printer.PrintMessage("Tack och hej då!");
             printer.ConfirmToContinue();
+            printer.Clear();
         }
 
         public void ShowInvalidMenuInput()

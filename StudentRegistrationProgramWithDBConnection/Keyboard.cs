@@ -22,5 +22,12 @@ namespace StudentRegistrationProgramWithDBConnection
             prompter.PrintPrompt(prompt);
             return GetStringInput();
         }
+        public int GetIntInput(string prompt)
+        {
+            if (int.TryParse(GetStringInput(prompt), out int result))
+                return result;
+            else
+                return -1;
+        }
     }
 }

@@ -13,8 +13,8 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             Printer printer = new Printer();
             Keyboard keyboard = new Keyboard(printer);
-            ProgramDbContext dbContext = new ProgramDbContext();
-            Menu menu = new Menu(printer, keyboard, dbContext);
+            DatabaseTransfer databaseTransfer = new DatabaseTransfer();
+            Menu menu = new Menu(printer, keyboard, databaseTransfer);
             menu.Go();
         }
     }
