@@ -10,10 +10,12 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         private ConsoleColor defaultColor = ConsoleColor.White;
         public void Clear() => Console.Clear();
+        private void Indent() => Console.Write("     ");
         private void Print(string text, ConsoleColor textColor)
         {
             Console.ForegroundColor = textColor;
-            Console.Write($"     {text}");
+            Indent();
+            Console.Write(text);
             Console.ForegroundColor = defaultColor;
         }
         private void Print(string text) => Print(text, defaultColor);
@@ -38,6 +40,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ConfirmToContinue()
         {
             PrintInactive("Tryck ENTER för att fortsätta.");
+            Indent();
             Console.ReadLine();
         }
         public void PrintList<T>(IEnumerable<T> tList)
