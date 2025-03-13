@@ -40,5 +40,10 @@ namespace StudentRegistrationProgramWithDBConnection
             PrintInactive("Tryck ENTER för att fortsätta.");
             Console.ReadLine();
         }
+        public void PrintList<T>(IEnumerable<T> tList)
+        {
+            foreach (T t in tList)
+                PrintMessage(t.ToString());
+        }
     }
 }

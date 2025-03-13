@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,9 +74,8 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowEditMenu()
         {
             printer.PrintTitle("Ändrar existerande student");
-
-            foreach (Student student in databaseTransfer.AllStudents())
-                printer.PrintMessage(student.ToString());
+            printer.PrintList<Student>(databaseTransfer.AllStudents());
+            int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId);
 
             if (int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId))
             {
