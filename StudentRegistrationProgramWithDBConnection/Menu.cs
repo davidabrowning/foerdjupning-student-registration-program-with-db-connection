@@ -11,12 +11,12 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         private Printer printer;
         private Keyboard keyboard;
-        private ProgramDbContext dbContext;
-        public Menu(Printer printer, Keyboard keyboard, ProgramDbContext dbContext)
+        private DatabaseTransfer databaseTransfer;
+        public Menu(Printer printer, Keyboard keyboard, DatabaseTransfer databaseTransfer)
         {
             this.printer = printer;
             this.keyboard = keyboard;
-            this.dbContext = dbContext;
+            this.databaseTransfer = databaseTransfer;
         }
         public void Go()
         {
@@ -57,7 +57,7 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             printer.PrintTitle("Registerar ny student...");
             Student student = GetNewStudentFromUser();
-            AddToDatabase(student);
+            databaseTransfer.Add(student);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
@@ -70,28 +70,20 @@ namespace StudentRegistrationProgramWithDBConnection
                 City = keyboard.GetStringInput("Stad: ")
             };
         }
-        private void AddToDatabase(Student student)
-        {
-            dbContext.Add(student);
-            dbContext.SaveChanges();
-        }
         public void ShowEditMenu()
         {
             printer.PrintTitle("Ändrar existerande student");
 
-            foreach (Student student in dbContext.Students)
+            foreach (Student student in databaseTransfer.AllStudents())
                 printer.PrintMessage(student.ToString());
 
             if (int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId))
             {
-                Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
-                if (student != null)
+                Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+                if (originalStudent != null)
                 {
                     Student updatedStudentInfo = GetNewStudentFromUser();
-                    student.FirstName = updatedStudentInfo.FirstName;
-                    student.LastName = updatedStudentInfo.LastName;
-                    student.City = updatedStudentInfo.City;
-                    dbContext.SaveChanges();
+                    databaseTransfer.Update(originalStudent, updatedStudentInfo);
                 }
                 else
                 {
@@ -109,7 +101,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowStudentList()
         {
             printer.PrintTitle("Listar alla studenter");
-            foreach (Student student in dbContext.Students)
+            foreach (Student student in databaseTransfer.AllStudents())
                printer.PrintMessage(student.ToString());
             printer.ConfirmToContinue();
             ShowMainMenu();
@@ -119,6 +111,7 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintTitle("Avsluta programmet");
             printer.PrintMessage("Tack och hej då!");
             printer.ConfirmToContinue();
+            printer.Clear();
         }
 
         public void ShowInvalidMenuInput()
