@@ -12,11 +12,11 @@ namespace StudentRegistrationProgramWithDBConnection
         private Printer printer;
         private Keyboard keyboard;
         private ProgramDbContext dbContext;
-        public Menu()
+        public Menu(Printer printer, Keyboard keyboard, ProgramDbContext dbContext)
         {
-            printer = new Printer();
-            keyboard = new Keyboard(printer);
-            dbContext = new ProgramDbContext();
+            this.printer = printer;
+            this.keyboard = keyboard;
+            this.dbContext = dbContext;
         }
         public void Go()
         {
