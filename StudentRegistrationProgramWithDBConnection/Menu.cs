@@ -12,7 +12,7 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         private Printer printer;
         private Keyboard keyboard;
-        private ProgramDbContext dbContext;
+        private DatabaseTransfer databaseTransfer;
 
         private const string MainMenuTitle = "Huvudmeny";
         private const string MainMenuOptionRegister = "Registrera ny student";
@@ -29,7 +29,7 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string PromptLastName = "Efternamn:";
         private const string PromptCity = "Stad:";
 
-        public Menu(Printer printer, Keyboard keyboard, ProgramDbContext dbContext)
+        public Menu(Printer printer, Keyboard keyboard, DatabaseTransfer databaseTransfer)
         {
             this.printer = printer;
             this.keyboard = keyboard;
