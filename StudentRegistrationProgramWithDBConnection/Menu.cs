@@ -13,6 +13,30 @@ namespace StudentRegistrationProgramWithDBConnection
         private Printer printer;
         private Keyboard keyboard;
         private DatabaseTransfer databaseTransfer;
+
+        private const string MainMenuTitle = "Huvudmeny";
+        private const string MainMenuOptionRegister = "Registrera ny student";
+        private const string MainMenuOptionEditOne = "Ändra student";
+        private const string MainMenuOptionListAll = "Lista alla studenter";
+        private const string MainMenuOptionQuit = "Avsluta programmet";
+        private const string MainMenuPrompt = "Ditt val:";
+        private const string RegisterMenuTitle = "Registrera ny student";
+        private const string EditMenuTitle = "Ändrar student";
+        private const string EditMenuPromptStudentId = "Student att ändra (ange student id-nummer):";
+        private const string ListAllMenuTitle = "Lista alla studenter";
+        private const string QuitMenuTitle = "Avsluta programmet";
+        private const string InvalidMenuInputTitle = "Oväntad inmatning";
+        private const string PromptFirstName = "Förnamn:";
+        private const string PromptLastName = "Efternamn:";
+        private const string PromptCity = "Stad:";
+        private const string SuccessStudentRegistered = "Ny student registerad.";
+        private const string SuccessStudentEdited = "Student uppdaterad.";
+        private const string SuccessListComplete = "Listan klar.";
+        private const string SuccessGoodbye = "Tack och hej då!";
+        private const string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
+        private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
+        private const string WarningStudentIsNull = "Student är null.";
+
         public Menu(Printer printer, Keyboard keyboard, DatabaseTransfer databaseTransfer)
         {
             this.printer = printer;
@@ -25,12 +49,12 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
-            printer.PrintTitle("Huvudmeny");
-            printer.PrintMessage("[1] Registrera ny student");
-            printer.PrintMessage("[2] Ändra student");
-            printer.PrintMessage("[3] Lista alla studenter");
-            printer.PrintMessage("[Q] Avsluta programmet");
-            printer.PrintPrompt("Ditt val: ");
+            printer.PrintTitle(MainMenuTitle);
+            printer.PrintMessage($"[1] {MainMenuOptionRegister}");
+            printer.PrintMessage($"[2] {MainMenuOptionEditOne}");
+            printer.PrintMessage($"[3] {MainMenuOptionListAll}");
+            printer.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            printer.PrintPrompt(MainMenuPrompt);
             HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
@@ -56,10 +80,10 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowRegistrationMenu()
         {
-            printer.PrintTitle("Registerar ny student...");
+            printer.PrintTitle(RegisterMenuTitle);
             Student student = GetNewStudentFromUser();
             databaseTransfer.Add(student);
-            printer.PrintSuccess("Ny student registerad.");
+            printer.PrintSuccess(SuccessStudentRegistered);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
@@ -67,51 +91,51 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             return new Student()
             {
-                FirstName = keyboard.GetStringInput("Förnamn: "),
-                LastName = keyboard.GetStringInput("Efternamn: "),
-                City = keyboard.GetStringInput("Stad: ")
+                FirstName = keyboard.GetStringInput(PromptFirstName),
+                LastName = keyboard.GetStringInput(PromptLastName),
+                City = keyboard.GetStringInput(PromptCity)
             };
         }
         public void ShowEditMenu()
         {
-            printer.PrintTitle("Ändrar existerande student");
+            printer.PrintTitle(EditMenuTitle);
             printer.PrintList<Student>(databaseTransfer.AllStudents());
-            int idToEdit = keyboard.GetIntInput("Student att ändra (ange student id-nummer): ");
+            int idToEdit = keyboard.GetIntInput(EditMenuPromptStudentId);
             if (databaseTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
-                printer.PrintWarning("Lyckades inte hitta student med detta id-nummer.");
+                printer.PrintWarning(WarningStudentIdNotFound);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
         private void EditStudent(int studentId)
         {
-            Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student? originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             Student updatedStudentInfo = GetNewStudentFromUser();
             databaseTransfer.Update(originalStudent, updatedStudentInfo);
-            printer.PrintSuccess("Student uppdaterad.");
+            printer.PrintSuccess(SuccessStudentEdited);
         }
         public void ShowStudentList()
         {
-            printer.PrintTitle("Listar alla studenter");
+            printer.PrintTitle(ListAllMenuTitle);
             foreach (Student student in databaseTransfer.AllStudents())
-               printer.PrintMessage(student.ToString());
-            printer.PrintSuccess("Listan klar.");
+               printer.PrintMessage(student.ToString() ?? WarningStudentIsNull);
+            printer.PrintSuccess(SuccessListComplete);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
         public void ShowQuitProgram()
         {
-            printer.PrintTitle("Avsluta programmet");
-            printer.PrintMessage("Tack och hej då!");
+            printer.PrintTitle(QuitMenuTitle);
+            printer.PrintSuccess(SuccessGoodbye);
             printer.ConfirmToContinue();
             printer.Clear();
         }
 
         public void ShowInvalidMenuInput()
         {
-            printer.PrintTitle("Oväntad inmatning");
-            printer.PrintWarning("Oväntad inmatning. Försök igen.");
+            printer.PrintTitle(InvalidMenuInputTitle);
+            printer.PrintWarning(WarningUnexpectedInput);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
