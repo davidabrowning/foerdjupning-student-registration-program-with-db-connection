@@ -9,16 +9,22 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
-        private Printer printer = new Printer();
-        private ProgramDbContext dbContext
-            = new ProgramDbContext();
+        private Printer printer;
+        private Keyboard keyboard;
+        private ProgramDbContext dbContext;
+        public Menu()
+        {
+            printer = new Printer();
+            keyboard = new Keyboard(printer);
+            dbContext = new ProgramDbContext();
+        }
         public void Go()
         {
             ShowMainMenu();
         }
         public void ShowMainMenu()
         {
-            printer.PrintTitle("Huvudmeny)");
+            printer.PrintTitle("Huvudmeny");
             printer.PrintMessage("[1] Registrera ny student");
             printer.PrintMessage("[2] Ändra student");
             printer.PrintMessage("[3] Lista alla studenter");
@@ -28,7 +34,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void HandleMainMenuSelection()
         {
-            switch((Console.ReadLine() ?? "").Trim().ToUpper())
+            switch(keyboard.GetStringInput().ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
@@ -57,17 +63,11 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         private Student GetNewStudentFromUser()
         {
-            printer.PrintPrompt("Förnamn: ");
-            string firstName = Console.ReadLine();
-            printer.PrintPrompt("Efternamn: ");
-            string lastName = Console.ReadLine();
-            printer.PrintPrompt("Stad: ");
-            string city = Console.ReadLine();
             return new Student()
             {
-                FirstName = firstName,
-                LastName = lastName,
-                City = city
+                FirstName = keyboard.GetStringInput("Förnamn: "),
+                LastName = keyboard.GetStringInput("Efternamn: "),
+                City = keyboard.GetStringInput("Stad: ")
             };
         }
         private void AddToDatabase(Student student)
@@ -82,8 +82,7 @@ namespace StudentRegistrationProgramWithDBConnection
             foreach (Student student in dbContext.Students)
                 printer.PrintMessage(student.ToString());
 
-            printer.PrintPrompt("Student att ändra (ange student id-nummer): ");
-            if (int.TryParse(Console.ReadLine(), out int studentId))
+            if (int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId))
             {
                 Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
                 if (student != null)
