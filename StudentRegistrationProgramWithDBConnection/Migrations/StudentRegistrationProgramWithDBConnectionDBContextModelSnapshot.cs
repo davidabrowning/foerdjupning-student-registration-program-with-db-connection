@@ -9,7 +9,7 @@ using StudentRegistrationProgramWithDBConnection;
 
 namespace StudentRegistrationProgramWithDBConnection.Migrations
 {
-    [DbContext(typeof(StudentRegistrationProgramWithDBConnectionDBContext))]
+    [DbContext(typeof(ProgramDbContext))]
     partial class StudentRegistrationProgramWithDBConnectionDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

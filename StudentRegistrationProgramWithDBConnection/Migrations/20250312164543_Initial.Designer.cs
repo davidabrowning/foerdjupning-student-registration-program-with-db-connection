@@ -10,7 +10,7 @@ using StudentRegistrationProgramWithDBConnection;
 
 namespace StudentRegistrationProgramWithDBConnection.Migrations
 {
-    [DbContext(typeof(StudentRegistrationProgramWithDBConnectionDBContext))]
+    [DbContext(typeof(ProgramDbContext))]
     [Migration("20250312164543_Initial")]
     partial class Initial
     {
