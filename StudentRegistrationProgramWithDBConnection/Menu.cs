@@ -35,6 +35,7 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string SuccessGoodbye = "Tack och hej då!";
         private const string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
+        private const string WarningStudentIsNull = "Student är null.";
 
         public Menu(Printer printer, Keyboard keyboard, DatabaseTransfer databaseTransfer)
         {
@@ -109,7 +110,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         private void EditStudent(int studentId)
         {
-            Student originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student? originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             Student updatedStudentInfo = GetNewStudentFromUser();
             databaseTransfer.Update(originalStudent, updatedStudentInfo);
             printer.PrintSuccess(SuccessStudentEdited);
@@ -118,7 +119,7 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             printer.PrintTitle(ListAllMenuTitle);
             foreach (Student student in databaseTransfer.AllStudents())
-               printer.PrintMessage(student.ToString());
+               printer.PrintMessage(student.ToString() ?? WarningStudentIsNull);
             printer.PrintSuccess(SuccessListComplete);
             printer.ConfirmToContinue();
             ShowMainMenu();

@@ -8,7 +8,7 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Printer
     {
-        private ConsoleColor defaultColor = ConsoleColor.White;
+        private const ConsoleColor defaultColor = ConsoleColor.White;
         public void Clear() => Console.Clear();
         private void Indent() => Console.Write("     ");
         private void Print(string text, ConsoleColor textColor)
@@ -22,7 +22,7 @@ namespace StudentRegistrationProgramWithDBConnection
         private void PrintLine(string text, ConsoleColor textColor) => Print($"{text}\n", textColor);
         private void PrintLine(string text) => PrintLine(text, defaultColor);
         public void PrintMessage(string text) => PrintLine(text);
-        public void PrintSuccess(string text) => PrintLine($"Succé: {text}", ConsoleColor.Green);
+        public void PrintSuccess(string text) => PrintLine($"Lyckats: {text}", ConsoleColor.Green);
         public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
         public void PrintError(string text) => PrintLine($"Fel: {text}", ConsoleColor.Red);
         public void PrintInactive(string text) => PrintLine(text, ConsoleColor.Gray);
@@ -46,7 +46,8 @@ namespace StudentRegistrationProgramWithDBConnection
         public void PrintList<T>(IEnumerable<T> tList)
         {
             foreach (T t in tList)
-                PrintMessage(t.ToString());
+                if (t != null)
+                    PrintMessage(t.ToString() ?? "");
         }
     }
 }
