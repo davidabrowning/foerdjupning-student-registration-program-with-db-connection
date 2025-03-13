@@ -9,7 +9,8 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
-        private StudentRegistrationProgramWithDBConnectionDBContext dbContext = new StudentRegistrationProgramWithDBConnectionDBContext();
+        private StudentRegistrationProgramWithDBConnectionDBContext dbContext
+            = new StudentRegistrationProgramWithDBConnectionDBContext();
         public void Go()
         {
             ShowMainMenu();
