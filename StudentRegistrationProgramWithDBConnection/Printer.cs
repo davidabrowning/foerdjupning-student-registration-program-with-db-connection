@@ -20,9 +20,9 @@ namespace StudentRegistrationProgramWithDBConnection
         private void PrintLine(string text, ConsoleColor textColor) => Print($"{text}\n", textColor);
         private void PrintLine(string text) => PrintLine(text, defaultColor);
         public void PrintMessage(string text) => PrintLine(text);
-        public void PrintSuccess(string text) => PrintLine($"Succé: {text}: ", ConsoleColor.Green);
-        public void PrintWarning(string text) => PrintLine($"Varning: {text}: ", ConsoleColor.Yellow);
-        public void PrintError(string text) => PrintLine($"Fel: {text}: ", ConsoleColor.Red);
+        public void PrintSuccess(string text) => PrintLine($"Succé: {text}", ConsoleColor.Green);
+        public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
+        public void PrintError(string text) => PrintLine($"Fel: {text}", ConsoleColor.Red);
         public void PrintInactive(string text) => PrintLine(text, ConsoleColor.Gray);
         public void PrintPrompt(string text)
         {
