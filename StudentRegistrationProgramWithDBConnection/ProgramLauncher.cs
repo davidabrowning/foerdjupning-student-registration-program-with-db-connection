@@ -11,10 +11,10 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         public void Go()
         {
-            private Printer printer = new Printer();
-            private Keyboard keyboard = new Keyboard(printer);
-            private ProgramDbContext dbContext = new ProgramDbContext();
-            Menu menu = new Menu(keyboard, printer, dbContext);
+            Printer printer = new Printer();
+            Keyboard keyboard = new Keyboard(printer);
+            ProgramDbContext dbContext = new ProgramDbContext();
+            Menu menu = new Menu(printer, keyboard, dbContext);
             menu.Go();
         }
     }
