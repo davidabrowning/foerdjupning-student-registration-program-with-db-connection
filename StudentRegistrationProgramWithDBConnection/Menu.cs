@@ -10,8 +10,8 @@ namespace StudentRegistrationProgramWithDBConnection
     internal class Menu
     {
         private Printer printer = new Printer();
-        private StudentRegistrationProgramWithDBConnectionDBContext dbContext
-            = new StudentRegistrationProgramWithDBConnectionDBContext();
+        private ProgramDbContext dbContext
+            = new ProgramDbContext();
         public void Go()
         {
             ShowMainMenu();
