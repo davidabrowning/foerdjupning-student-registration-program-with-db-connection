@@ -15,7 +15,7 @@ namespace StudentRegistrationProgramWithDBConnection
 
         public override string? ToString()
         {
-            return $"#{StudentId} {FirstName} {LastName} ({City})";
+            return $"{FirstName} {LastName} ({City}) [id: {StudentId}]";
         }
     }
 }

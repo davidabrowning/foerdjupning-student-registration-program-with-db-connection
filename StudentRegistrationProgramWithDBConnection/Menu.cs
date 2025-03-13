@@ -21,7 +21,7 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string MainMenuOptionQuit = "Avsluta programmet";
         private const string MainMenuPrompt = "Ditt val:";
         private const string RegisterMenuTitle = "Registrera ny student";
-        private const string EditMenuTitle = "Ändrar student";
+        private const string EditMenuTitle = "Ändra student";
         private const string EditMenuPromptStudentId = "Student att ändra (ange student id-nummer):";
         private const string ListAllMenuTitle = "Lista alla studenter";
         private const string QuitMenuTitle = "Avsluta programmet";
@@ -54,6 +54,7 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintMessage($"[2] {MainMenuOptionEditOne}");
             printer.PrintMessage($"[3] {MainMenuOptionListAll}");
             printer.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            printer.PrintLine();
             printer.PrintPrompt(MainMenuPrompt);
             HandleMainMenuSelection();
         }
@@ -100,6 +101,7 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             printer.PrintTitle(EditMenuTitle);
             printer.PrintList<Student>(databaseTransfer.AllStudents());
+            printer.PrintLine();
             int idToEdit = keyboard.GetIntInput(EditMenuPromptStudentId);
             if (databaseTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
@@ -110,9 +112,14 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         private void EditStudent(int studentId)
         {
+            printer.PrintTitle(EditMenuTitle);
             Student? originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            printer.PrintMessage(originalStudent.ToString());
+            printer.PrintLine();
             Student updatedStudentInfo = GetNewStudentFromUser();
             databaseTransfer.Update(originalStudent, updatedStudentInfo);
+            printer.PrintLine();
+            printer.PrintMessage(originalStudent.ToString());
             printer.PrintSuccess(SuccessStudentEdited);
         }
         public void ShowStudentList()
@@ -120,14 +127,13 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintTitle(ListAllMenuTitle);
             foreach (Student student in databaseTransfer.AllStudents())
                printer.PrintMessage(student.ToString() ?? WarningStudentIsNull);
-            printer.PrintSuccess(SuccessListComplete);
             printer.ConfirmToContinue();
             ShowMainMenu();
         }
         public void ShowQuitProgram()
         {
             printer.PrintTitle(QuitMenuTitle);
-            printer.PrintSuccess(SuccessGoodbye);
+            printer.PrintMessage(SuccessGoodbye);
             printer.ConfirmToContinue();
             printer.Clear();
         }
