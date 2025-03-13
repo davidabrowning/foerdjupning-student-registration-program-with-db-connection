@@ -12,6 +12,22 @@ namespace StudentRegistrationProgramWithDBConnection
         private Printer printer;
         private Keyboard keyboard;
         private ProgramDbContext dbContext;
+
+        private const string MainMenuTitle = "Huvudmeny";
+        private const string MainMenuOptionRegister = "Registrera ny student";
+        private const string MainMenuOptionEditOne = "Ändra student";
+        private const string MainMenuOptionListAll = "Lista alla studenter";
+        private const string MainMenuOptionQuit = "Avsluta programmet";
+        private const string MainMenuPrompt = "Ditt val:";
+        private const string RegisterMenuTitle = "Registrera ny student";
+        private const string EditMenuTitle = "Ändra existerande student";
+        private const string EditMenuPromptStudentId = "Student att ändra (ange student id-nummer):";
+        private const string ListAllMenuTitle = "Lista alla studenter";
+        private const string QuitMenuTitle = "Avsluta programmet";
+        private const string PromptFirstName = "Förnamn:";
+        private const string PromptLastName = "Efternamn:";
+        private const string PromptCity = "Stad:";
+
         public Menu(Printer printer, Keyboard keyboard, ProgramDbContext dbContext)
         {
             this.printer = printer;
@@ -24,12 +40,12 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
-            printer.PrintTitle("Huvudmeny");
-            printer.PrintMessage("[1] Registrera ny student");
-            printer.PrintMessage("[2] Ändra student");
-            printer.PrintMessage("[3] Lista alla studenter");
-            printer.PrintMessage("[Q] Avsluta programmet");
-            printer.PrintPrompt("Ditt val: ");
+            printer.PrintTitle(MainMenuTitle);
+            printer.PrintMessage($"[1] {MainMenuOptionRegister}");
+            printer.PrintMessage($"[2] {MainMenuOptionEditOne}");
+            printer.PrintMessage($"[3] {MainMenuOptionListAll}");
+            printer.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            printer.PrintPrompt(MainMenuPrompt);
             HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
@@ -55,7 +71,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowRegistrationMenu()
         {
-            printer.PrintTitle("Registerar ny student...");
+            printer.PrintTitle(RegisterMenuTitle);
             Student student = GetNewStudentFromUser();
             AddToDatabase(student);
             printer.ConfirmToContinue();
@@ -65,9 +81,9 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             return new Student()
             {
-                FirstName = keyboard.GetStringInput("Förnamn: "),
-                LastName = keyboard.GetStringInput("Efternamn: "),
-                City = keyboard.GetStringInput("Stad: ")
+                FirstName = keyboard.GetStringInput(PromptFirstName),
+                LastName = keyboard.GetStringInput(PromptLastName),
+                City = keyboard.GetStringInput(PromptCity)
             };
         }
         private void AddToDatabase(Student student)
@@ -77,12 +93,12 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowEditMenu()
         {
-            printer.PrintTitle("Ändrar existerande student");
+            printer.PrintTitle(EditMenuTitle);
 
             foreach (Student student in dbContext.Students)
                 printer.PrintMessage(student.ToString());
 
-            if (int.TryParse(keyboard.GetStringInput("Student att ändra (ange student id-nummer): "), out int studentId))
+            if (int.TryParse(keyboard.GetStringInput(EditMenuPromptStudentId), out int studentId))
             {
                 Student student = dbContext.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
                 if (student != null)
@@ -108,7 +124,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowStudentList()
         {
-            printer.PrintTitle("Listar alla studenter");
+            printer.PrintTitle(ListAllMenuTitle);
             foreach (Student student in dbContext.Students)
                printer.PrintMessage(student.ToString());
             printer.ConfirmToContinue();
@@ -116,7 +132,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowQuitProgram()
         {
-            printer.PrintTitle("Avsluta programmet");
+            printer.PrintTitle(QuitMenuTitle);
             printer.PrintMessage("Tack och hej då!");
             printer.ConfirmToContinue();
         }

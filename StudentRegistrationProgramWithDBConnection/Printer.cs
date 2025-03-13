@@ -26,7 +26,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void PrintInactive(string text) => PrintLine(text, ConsoleColor.Gray);
         public void PrintPrompt(string text)
         {
-            Print(text, ConsoleColor.Cyan);
+            Print($"{text} ", ConsoleColor.Cyan);
             Console.ForegroundColor= ConsoleColor.Cyan;
         }
         public void PrintTitle(string text)
