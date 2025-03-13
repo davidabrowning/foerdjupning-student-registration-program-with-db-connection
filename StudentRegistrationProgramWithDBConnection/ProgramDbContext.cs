@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class ProgramDbContext : DbContext
     {
-        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentRegistrationProgramWithDBConnection;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         public DbSet<Student> Students { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build()
+                .GetSection("ConnectionStrings")["ApplicationDb"]);
         }
     }
 }
