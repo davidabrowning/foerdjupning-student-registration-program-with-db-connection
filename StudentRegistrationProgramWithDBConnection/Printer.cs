@@ -21,11 +21,12 @@ namespace StudentRegistrationProgramWithDBConnection
         private void Print(string text) => Print(text, defaultColor);
         private void PrintLine(string text, ConsoleColor textColor) => Print($"{text}\n", textColor);
         private void PrintLine(string text) => PrintLine(text, defaultColor);
+        public void PrintLine() => PrintLine("");
         public void PrintMessage(string text) => PrintLine(text);
-        public void PrintSuccess(string text) => PrintLine($"Lyckats: {text}", ConsoleColor.Green);
+        public void PrintSuccess(string text) => PrintLine(text, ConsoleColor.Green);
         public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
         public void PrintError(string text) => PrintLine($"Fel: {text}", ConsoleColor.Red);
-        public void PrintInactive(string text) => PrintLine(text, ConsoleColor.Gray);
+        public void PrintInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
         public void PrintPrompt(string text)
         {
             Print($"{text} ", ConsoleColor.Cyan);
@@ -36,9 +37,11 @@ namespace StudentRegistrationProgramWithDBConnection
             Clear();
             PrintLine("\n");
             PrintLine($"===== {text} =====");
+            PrintLine();
         }
         public void ConfirmToContinue()
         {
+            PrintLine();
             PrintInactive("Tryck ENTER för att fortsätta.");
             Indent();
             Console.ReadLine();
