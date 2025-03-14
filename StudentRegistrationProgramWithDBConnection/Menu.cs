@@ -163,8 +163,11 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowQuitProgram()
         {
             output.PrintTitle(QuitMenuTitle);
+            output.PrintSectionDivider();
             output.PrintMessage(SuccessGoodbye);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             output.Clear();
         }
 
