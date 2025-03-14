@@ -10,10 +10,6 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
-        private IOutput output;
-        private IInput input;
-        private IDataTransfer dataTransfer;
-
         private const string MainMenuTitle = "Huvudmeny";
         private const string MainMenuOptionRegister = "Registrera ny student";
         private const string MainMenuOptionEditOne = "Ändra student";
@@ -36,6 +32,10 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
         private const string WarningStudentIsNull = "Student är null.";
+
+        private readonly IOutput output;
+        private readonly IInput input;
+        private readonly IDataTransfer dataTransfer;
 
         public Menu(IOutput output, IInput input, IDataTransfer databaseTransfer)
         {
@@ -140,6 +140,11 @@ namespace StudentRegistrationProgramWithDBConnection
             output.PrintTitle(EditMenuTitle);
             output.PrintSectionDivider();
             Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            if (originalStudent == null)
+            {
+                output.PrintWarning(WarningStudentIdNotFound);
+                return;
+            }
             output.PrintMessage(originalStudent.ToString());
             output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
