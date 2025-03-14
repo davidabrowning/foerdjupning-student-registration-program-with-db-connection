@@ -138,13 +138,15 @@ namespace StudentRegistrationProgramWithDBConnection
         private void EditStudent(int studentId)
         {
             output.PrintTitle(EditMenuTitle);
+            output.PrintSectionDivider();
             Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             output.PrintMessage(originalStudent.ToString());
-            output.PrintLine();
+            output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
+            output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintLine();
             output.PrintMessage(originalStudent.ToString());
+            output.PrintSectionDivider();
             output.PrintSuccess(SuccessStudentEdited);
         }
         public void ShowStudentList()
