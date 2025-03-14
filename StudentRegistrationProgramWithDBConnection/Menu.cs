@@ -59,24 +59,40 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         private void PrintMainMenuOptions()
         {
+            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
             output.PrintMessage($"[1] {MainMenuOptionRegister}");
-            output.PrintMessage($"[2] {MainMenuOptionEditOne}");
-            output.PrintMessage($"[3] {MainMenuOptionListAll}");
-            output.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            if (atLeastOneStudentIsRegistered)
+            {
+                output.PrintMessage($"[2] {MainMenuOptionEditOne}");
+                output.PrintMessage($"[3] {MainMenuOptionListAll}");
+            }
+            else
+            {
+                output.PrintInactive($"[2] {MainMenuOptionEditOne}");
+                output.PrintInactive($"[3] {MainMenuOptionListAll}");
+            }
+                output.PrintMessage($"[Q] {MainMenuOptionQuit}");
         }
         public void HandleMainMenuSelection()
         {
-            switch(input.GetStringInput().ToUpper())
+            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
+            switch (input.GetStringInput().ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
                     break;
                 case "2":
-                    ShowEditMenu();
-                    break;
+                    if (atLeastOneStudentIsRegistered)
+                        ShowEditMenu();
+                    else
+                        ShowInvalidMenuInput();
+                        break;
                 case "3":
-                    ShowStudentList();
-                    break;
+                    if (atLeastOneStudentIsRegistered)
+                        ShowStudentList();
+                    else
+                        ShowInvalidMenuInput();
+                        break;
                 case "Q":
                     ShowQuitProgram();
                     break;
@@ -178,7 +194,6 @@ namespace StudentRegistrationProgramWithDBConnection
 
         public void ShowInvalidMenuInput()
         {
-            output.PrintTitle(InvalidMenuInputTitle);
             output.PrintSectionDivider();
             output.PrintWarning(WarningUnexpectedInput);
             output.PrintSectionDivider();
