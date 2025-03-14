@@ -31,5 +31,9 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             return dbContext.Students.Where(s => s.StudentId == studentId).Any();
         }
+        public int StudentCount()
+        {
+            return AllStudents().Count();
+        }
     }
 }
