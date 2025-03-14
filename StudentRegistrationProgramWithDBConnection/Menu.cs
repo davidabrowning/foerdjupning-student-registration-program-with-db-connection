@@ -49,14 +49,29 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
+            PrintMainMenuTitle();
+            output.PrintSectionDivider();
+            PrintMainMenuOptions();
+            output.PrintSectionDivider();
+            PrintMainMenuPrompt();
+
+            HandleMainMenuSelection();
+        }
+        private void PrintMainMenuTitle()
+        {
             output.PrintTitle(MainMenuTitle);
+
+        }
+        private void PrintMainMenuOptions()
+        {
             output.PrintMessage($"[1] {MainMenuOptionRegister}");
             output.PrintMessage($"[2] {MainMenuOptionEditOne}");
             output.PrintMessage($"[3] {MainMenuOptionListAll}");
             output.PrintMessage($"[Q] {MainMenuOptionQuit}");
-            output.PrintLine();
+        }
+        private void PrintMainMenuPrompt()
+        {
             output.PrintPrompt(MainMenuPrompt);
-            HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
         {
