@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class DatabaseTransfer
+    internal class DatabaseTransfer: IDataTransfer
     {
         private ProgramDbContext dbContext = new ProgramDbContext();
         public void Add(Student student)
@@ -23,9 +23,9 @@ namespace StudentRegistrationProgramWithDBConnection
             original.City = updated.City;
             dbContext.SaveChanges();
         }
-        public DbSet<Student> AllStudents()
+        public List<Student> AllStudents()
         {
-            return dbContext.Students;
+            return dbContext.Students.ToList();
         }
         public bool IsValidStudentId(int studentId)
         {

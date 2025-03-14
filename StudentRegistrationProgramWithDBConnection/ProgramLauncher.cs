@@ -11,10 +11,10 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         public void Go()
         {
-            Printer printer = new Printer();
-            Keyboard keyboard = new Keyboard(printer);
-            DatabaseTransfer databaseTransfer = new DatabaseTransfer();
-            Menu menu = new Menu(printer, keyboard, databaseTransfer);
+            IOutput output = new Printer();
+            IInput input = new Keyboard(output);
+            IDataTransfer dataTransfer = new DatabaseTransfer();
+            Menu menu = new Menu(output, input, dataTransfer);
             menu.Go();
         }
     }
