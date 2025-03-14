@@ -13,8 +13,8 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             IOutput output = new Printer();
             IInput input = new Keyboard(output);
-            DatabaseTransfer databaseTransfer = new DatabaseTransfer();
-            Menu menu = new Menu(output, input, databaseTransfer);
+            IDataTransfer dataTransfer = new DatabaseTransfer();
+            Menu menu = new Menu(output, input, dataTransfer);
             menu.Go();
         }
     }

@@ -12,7 +12,7 @@ namespace StudentRegistrationProgramWithDBConnection
     {
         private IOutput output;
         private IInput input;
-        private DatabaseTransfer databaseTransfer;
+        private IDataTransfer dataTransfer;
 
         private const string MainMenuTitle = "Huvudmeny";
         private const string MainMenuOptionRegister = "Registrera ny student";
@@ -37,11 +37,11 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
         private const string WarningStudentIsNull = "Student är null.";
 
-        public Menu(IOutput output, IInput input, DatabaseTransfer databaseTransfer)
+        public Menu(IOutput output, IInput input, IDataTransfer databaseTransfer)
         {
             this.output = output;
             this.input = input;
-            this.databaseTransfer = databaseTransfer;
+            this.dataTransfer = databaseTransfer;
         }
         public void Go()
         {
@@ -83,7 +83,8 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             output.PrintTitle(RegisterMenuTitle);
             Student student = GetNewStudentFromUser();
-            databaseTransfer.Add(student);
+            dataTransfer.Add(student);
+            output.PrintMessage(student.ToString());
             output.PrintSuccess(SuccessStudentRegistered);
             output.ConfirmToContinue();
             ShowMainMenu();
@@ -100,10 +101,10 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowEditMenu()
         {
             output.PrintTitle(EditMenuTitle);
-            output.PrintList<Student>(databaseTransfer.AllStudents());
+            output.PrintList<Student>(dataTransfer.AllStudents());
             output.PrintLine();
             int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
-            if (databaseTransfer.IsValidStudentId(idToEdit))
+            if (dataTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
                 output.PrintWarning(WarningStudentIdNotFound);
@@ -113,11 +114,11 @@ namespace StudentRegistrationProgramWithDBConnection
         private void EditStudent(int studentId)
         {
             output.PrintTitle(EditMenuTitle);
-            Student? originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             output.PrintMessage(originalStudent.ToString());
             output.PrintLine();
             Student updatedStudentInfo = GetNewStudentFromUser();
-            databaseTransfer.Update(originalStudent, updatedStudentInfo);
+            dataTransfer.Update(originalStudent, updatedStudentInfo);
             output.PrintLine();
             output.PrintMessage(originalStudent.ToString());
             output.PrintSuccess(SuccessStudentEdited);
@@ -125,7 +126,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowStudentList()
         {
             output.PrintTitle(ListAllMenuTitle);
-            foreach (Student student in databaseTransfer.AllStudents())
+            foreach (Student student in dataTransfer.AllStudents())
                output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
             output.ConfirmToContinue();
             ShowMainMenu();
