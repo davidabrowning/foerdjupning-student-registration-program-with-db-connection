@@ -42,7 +42,6 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ConfirmToContinue()
         {
-            PrintLine();
             PrintInactive("Tryck ENTER för att fortsätta.");
             Indent();
             Console.ReadLine();

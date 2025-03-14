@@ -96,13 +96,29 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowRegistrationMenu()
         {
-            output.PrintTitle(RegisterMenuTitle);
-            Student student = GetNewStudentFromUser();
-            dataTransfer.Add(student);
-            output.PrintMessage(student.ToString());
+            PrintRegistrationTitle();
+            Student student = RegisterStudent();
+            output.PrintSectionDivider();
+            PrintStudent(student);
+            output.PrintSectionDivider();
             output.PrintSuccess(SuccessStudentRegistered);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
             ShowMainMenu();
+        }
+        private void PrintRegistrationTitle()
+        {
+            output.PrintTitle(RegisterMenuTitle);
+        }
+        private Student RegisterStudent()
+        {
+            Student student = GetNewStudentFromUser();
+            dataTransfer.Add(student);
+            return student;
+        }
+        private void PrintStudent(Student student)
+        {
+            output.PrintMessage(student.ToString());
         }
         private Student GetNewStudentFromUser()
         {
