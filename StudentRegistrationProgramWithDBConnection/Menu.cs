@@ -152,9 +152,12 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowStudentList()
         {
             output.PrintTitle(ListAllMenuTitle);
+            output.PrintSectionDivider();
             foreach (Student student in dataTransfer.AllStudents())
                output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
         public void ShowQuitProgram()
