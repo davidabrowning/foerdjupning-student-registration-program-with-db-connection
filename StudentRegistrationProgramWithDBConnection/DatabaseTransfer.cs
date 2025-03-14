@@ -10,7 +10,7 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class DatabaseTransfer: IDataTransfer
     {
-        private ProgramDbContext dbContext = new ProgramDbContext();
+        private readonly ProgramDbContext dbContext = new ProgramDbContext();
         public void Add(Student student)
         {
             dbContext.Add(student);

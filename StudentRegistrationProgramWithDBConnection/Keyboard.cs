@@ -9,7 +9,7 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Keyboard : IInput
     {
-        private IOutput output;
+        private readonly IOutput output;
         public Keyboard(IOutput output)
         {
             this.output = output;
