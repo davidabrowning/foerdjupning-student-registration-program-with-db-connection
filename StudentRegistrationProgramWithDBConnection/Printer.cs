@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class Printer
+    internal class Printer : IOutput
     {
         private const ConsoleColor defaultColor = ConsoleColor.White;
         public void Clear() => Console.Clear();

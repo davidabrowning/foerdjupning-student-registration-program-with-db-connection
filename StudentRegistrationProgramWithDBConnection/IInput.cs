@@ -8,9 +8,9 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal interface IInput
     {
-        public string GetStringInput();
-        public string GetStringInput(string prompt);
-        public int GetIntInput();
-        public int GetIntInput(string prompt);
+        string GetStringInput();
+        string GetStringInput(string prompt);
+        int GetIntInput();
+        int GetIntInput(string prompt);
     }
 }

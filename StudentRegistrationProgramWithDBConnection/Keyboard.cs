@@ -9,10 +9,10 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Keyboard : IInput
     {
-        private Printer prompter;
-        public Keyboard(Printer prompter)
+        private IOutput output;
+        public Keyboard(IOutput output)
         {
-            this.prompter = prompter;
+            this.output = output;
         }
         public string GetStringInput()
         {
@@ -20,7 +20,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public string GetStringInput(string prompt)
         {
-            prompter.PrintPrompt(prompt);
+            output.PrintPrompt(prompt);
             return GetStringInput();
         }
         public int GetIntInput()
@@ -32,7 +32,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public int GetIntInput(string prompt)
         {
-            prompter.PrintPrompt(prompt);
+            output.PrintPrompt(prompt);
             return GetIntInput();
         }
     }

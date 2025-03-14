@@ -10,7 +10,7 @@ namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
-        private Printer printer;
+        private IOutput output;
         private IInput input;
         private DatabaseTransfer databaseTransfer;
 
@@ -37,9 +37,9 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
         private const string WarningStudentIsNull = "Student är null.";
 
-        public Menu(Printer printer, IInput input, DatabaseTransfer databaseTransfer)
+        public Menu(IOutput output, IInput input, DatabaseTransfer databaseTransfer)
         {
-            this.printer = printer;
+            this.output = output;
             this.input = input;
             this.databaseTransfer = databaseTransfer;
         }
@@ -49,13 +49,13 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
-            printer.PrintTitle(MainMenuTitle);
-            printer.PrintMessage($"[1] {MainMenuOptionRegister}");
-            printer.PrintMessage($"[2] {MainMenuOptionEditOne}");
-            printer.PrintMessage($"[3] {MainMenuOptionListAll}");
-            printer.PrintMessage($"[Q] {MainMenuOptionQuit}");
-            printer.PrintLine();
-            printer.PrintPrompt(MainMenuPrompt);
+            output.PrintTitle(MainMenuTitle);
+            output.PrintMessage($"[1] {MainMenuOptionRegister}");
+            output.PrintMessage($"[2] {MainMenuOptionEditOne}");
+            output.PrintMessage($"[3] {MainMenuOptionListAll}");
+            output.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            output.PrintLine();
+            output.PrintPrompt(MainMenuPrompt);
             HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
@@ -81,11 +81,11 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowRegistrationMenu()
         {
-            printer.PrintTitle(RegisterMenuTitle);
+            output.PrintTitle(RegisterMenuTitle);
             Student student = GetNewStudentFromUser();
             databaseTransfer.Add(student);
-            printer.PrintSuccess(SuccessStudentRegistered);
-            printer.ConfirmToContinue();
+            output.PrintSuccess(SuccessStudentRegistered);
+            output.ConfirmToContinue();
             ShowMainMenu();
         }
         private Student GetNewStudentFromUser()
@@ -99,50 +99,50 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowEditMenu()
         {
-            printer.PrintTitle(EditMenuTitle);
-            printer.PrintList<Student>(databaseTransfer.AllStudents());
-            printer.PrintLine();
+            output.PrintTitle(EditMenuTitle);
+            output.PrintList<Student>(databaseTransfer.AllStudents());
+            output.PrintLine();
             int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
             if (databaseTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
-                printer.PrintWarning(WarningStudentIdNotFound);
-            printer.ConfirmToContinue();
+                output.PrintWarning(WarningStudentIdNotFound);
+            output.ConfirmToContinue();
             ShowMainMenu();
         }
         private void EditStudent(int studentId)
         {
-            printer.PrintTitle(EditMenuTitle);
+            output.PrintTitle(EditMenuTitle);
             Student? originalStudent = databaseTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
-            printer.PrintMessage(originalStudent.ToString());
-            printer.PrintLine();
+            output.PrintMessage(originalStudent.ToString());
+            output.PrintLine();
             Student updatedStudentInfo = GetNewStudentFromUser();
             databaseTransfer.Update(originalStudent, updatedStudentInfo);
-            printer.PrintLine();
-            printer.PrintMessage(originalStudent.ToString());
-            printer.PrintSuccess(SuccessStudentEdited);
+            output.PrintLine();
+            output.PrintMessage(originalStudent.ToString());
+            output.PrintSuccess(SuccessStudentEdited);
         }
         public void ShowStudentList()
         {
-            printer.PrintTitle(ListAllMenuTitle);
+            output.PrintTitle(ListAllMenuTitle);
             foreach (Student student in databaseTransfer.AllStudents())
-               printer.PrintMessage(student.ToString() ?? WarningStudentIsNull);
-            printer.ConfirmToContinue();
+               output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
+            output.ConfirmToContinue();
             ShowMainMenu();
         }
         public void ShowQuitProgram()
         {
-            printer.PrintTitle(QuitMenuTitle);
-            printer.PrintMessage(SuccessGoodbye);
-            printer.ConfirmToContinue();
-            printer.Clear();
+            output.PrintTitle(QuitMenuTitle);
+            output.PrintMessage(SuccessGoodbye);
+            output.ConfirmToContinue();
+            output.Clear();
         }
 
         public void ShowInvalidMenuInput()
         {
-            printer.PrintTitle(InvalidMenuInputTitle);
-            printer.PrintWarning(WarningUnexpectedInput);
-            printer.ConfirmToContinue();
+            output.PrintTitle(InvalidMenuInputTitle);
+            output.PrintWarning(WarningUnexpectedInput);
+            output.ConfirmToContinue();
             ShowMainMenu();
         }
     }
