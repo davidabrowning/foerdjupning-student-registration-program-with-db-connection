@@ -22,6 +22,7 @@ namespace StudentRegistrationProgramWithDBConnection
         private void PrintLine(string text, ConsoleColor textColor) => Print($"{text}\n", textColor);
         private void PrintLine(string text) => PrintLine(text, defaultColor);
         public void PrintLine() => PrintLine("");
+        public void PrintSectionDivider() => PrintLine();
         public void PrintMessage(string text) => PrintLine(text);
         public void PrintSuccess(string text) => PrintLine(text, ConsoleColor.Green);
         public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
@@ -37,11 +38,9 @@ namespace StudentRegistrationProgramWithDBConnection
             Clear();
             PrintLine("\n");
             PrintLine($"===== {text} =====");
-            PrintLine();
         }
         public void ConfirmToContinue()
         {
-            PrintLine();
             PrintInactive("Tryck ENTER för att fortsätta.");
             Indent();
             Console.ReadLine();

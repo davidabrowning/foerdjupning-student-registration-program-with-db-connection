@@ -50,13 +50,19 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowMainMenu()
         {
             output.PrintTitle(MainMenuTitle);
+            output.PrintSectionDivider();
+            PrintMainMenuOptions();
+            output.PrintSectionDivider();
+            output.PrintPrompt(MainMenuPrompt);
+
+            HandleMainMenuSelection();
+        }
+        private void PrintMainMenuOptions()
+        {
             output.PrintMessage($"[1] {MainMenuOptionRegister}");
             output.PrintMessage($"[2] {MainMenuOptionEditOne}");
             output.PrintMessage($"[3] {MainMenuOptionListAll}");
             output.PrintMessage($"[Q] {MainMenuOptionQuit}");
-            output.PrintLine();
-            output.PrintPrompt(MainMenuPrompt);
-            HandleMainMenuSelection();
         }
         public void HandleMainMenuSelection()
         {
@@ -82,12 +88,26 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowRegistrationMenu()
         {
             output.PrintTitle(RegisterMenuTitle);
+            output.PrintSectionDivider();
+            Student student = RegisterStudent();
+            output.PrintSectionDivider();
+            PrintStudent(student);
+            output.PrintSectionDivider();
+            output.PrintSuccess(SuccessStudentRegistered);
+            output.PrintSectionDivider();
+            output.ConfirmToContinue();
+
+            ShowMainMenu();
+        }
+        private Student RegisterStudent()
+        {
             Student student = GetNewStudentFromUser();
             dataTransfer.Add(student);
+            return student;
+        }
+        private void PrintStudent(Student student)
+        {
             output.PrintMessage(student.ToString());
-            output.PrintSuccess(SuccessStudentRegistered);
-            output.ConfirmToContinue();
-            ShowMainMenu();
         }
         private Student GetNewStudentFromUser()
         {
@@ -101,49 +121,64 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowEditMenu()
         {
             output.PrintTitle(EditMenuTitle);
+            output.PrintSectionDivider();
             output.PrintList<Student>(dataTransfer.AllStudents());
-            output.PrintLine();
+            output.PrintSectionDivider();
             int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
+            output.PrintSectionDivider();
             if (dataTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
                 output.PrintWarning(WarningStudentIdNotFound);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
         private void EditStudent(int studentId)
         {
             output.PrintTitle(EditMenuTitle);
+            output.PrintSectionDivider();
             Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             output.PrintMessage(originalStudent.ToString());
-            output.PrintLine();
+            output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
+            output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintLine();
             output.PrintMessage(originalStudent.ToString());
+            output.PrintSectionDivider();
             output.PrintSuccess(SuccessStudentEdited);
         }
         public void ShowStudentList()
         {
             output.PrintTitle(ListAllMenuTitle);
+            output.PrintSectionDivider();
             foreach (Student student in dataTransfer.AllStudents())
                output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
         public void ShowQuitProgram()
         {
             output.PrintTitle(QuitMenuTitle);
+            output.PrintSectionDivider();
             output.PrintMessage(SuccessGoodbye);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             output.Clear();
         }
 
         public void ShowInvalidMenuInput()
         {
             output.PrintTitle(InvalidMenuInputTitle);
+            output.PrintSectionDivider();
             output.PrintWarning(WarningUnexpectedInput);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
     }

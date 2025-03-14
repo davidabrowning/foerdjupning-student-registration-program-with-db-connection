@@ -18,5 +18,6 @@ namespace StudentRegistrationProgramWithDBConnection
         void ConfirmToContinue();
         void PrintList<T>(IEnumerable<T> list);
         void Clear();
+        void PrintSectionDivider();
     }
 }
