@@ -171,8 +171,11 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowInvalidMenuInput()
         {
             output.PrintTitle(InvalidMenuInputTitle);
+            output.PrintSectionDivider();
             output.PrintWarning(WarningUnexpectedInput);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
     }
