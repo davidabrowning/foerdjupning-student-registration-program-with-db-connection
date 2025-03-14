@@ -21,13 +21,11 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string EditMenuPromptStudentId = "Student att ändra (ange student id-nummer):";
         private const string ListAllMenuTitle = "Lista alla studenter";
         private const string QuitMenuTitle = "Avsluta programmet";
-        private const string InvalidMenuInputTitle = "Oväntad inmatning";
         private const string PromptFirstName = "Förnamn:";
         private const string PromptLastName = "Efternamn:";
         private const string PromptCity = "Stad:";
         private const string SuccessStudentRegistered = "Ny student registerad.";
         private const string SuccessStudentEdited = "Student uppdaterad.";
-        private const string SuccessListComplete = "Listan klar.";
         private const string SuccessGoodbye = "Tack och hej då!";
         private const string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
