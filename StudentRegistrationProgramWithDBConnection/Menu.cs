@@ -49,18 +49,13 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowMainMenu()
         {
-            PrintMainMenuTitle();
+            output.PrintTitle(MainMenuTitle);
             output.PrintSectionDivider();
             PrintMainMenuOptions();
             output.PrintSectionDivider();
-            PrintMainMenuPrompt();
+            output.PrintPrompt(MainMenuPrompt);
 
             HandleMainMenuSelection();
-        }
-        private void PrintMainMenuTitle()
-        {
-            output.PrintTitle(MainMenuTitle);
-
         }
         private void PrintMainMenuOptions()
         {
@@ -68,10 +63,6 @@ namespace StudentRegistrationProgramWithDBConnection
             output.PrintMessage($"[2] {MainMenuOptionEditOne}");
             output.PrintMessage($"[3] {MainMenuOptionListAll}");
             output.PrintMessage($"[Q] {MainMenuOptionQuit}");
-        }
-        private void PrintMainMenuPrompt()
-        {
-            output.PrintPrompt(MainMenuPrompt);
         }
         public void HandleMainMenuSelection()
         {
@@ -96,7 +87,8 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void ShowRegistrationMenu()
         {
-            PrintRegistrationTitle();
+            output.PrintTitle(RegisterMenuTitle);
+            output.PrintSectionDivider();
             Student student = RegisterStudent();
             output.PrintSectionDivider();
             PrintStudent(student);
@@ -104,11 +96,8 @@ namespace StudentRegistrationProgramWithDBConnection
             output.PrintSuccess(SuccessStudentRegistered);
             output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
-        }
-        private void PrintRegistrationTitle()
-        {
-            output.PrintTitle(RegisterMenuTitle);
         }
         private Student RegisterStudent()
         {
@@ -132,14 +121,18 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowEditMenu()
         {
             output.PrintTitle(EditMenuTitle);
+            output.PrintSectionDivider();
             output.PrintList<Student>(dataTransfer.AllStudents());
-            output.PrintLine();
+            output.PrintSectionDivider();
             int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
+            output.PrintSectionDivider();
             if (dataTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
                 output.PrintWarning(WarningStudentIdNotFound);
+            output.PrintSectionDivider();
             output.ConfirmToContinue();
+
             ShowMainMenu();
         }
         private void EditStudent(int studentId)

@@ -38,7 +38,6 @@ namespace StudentRegistrationProgramWithDBConnection
             Clear();
             PrintLine("\n");
             PrintLine($"===== {text} =====");
-            PrintLine();
         }
         public void ConfirmToContinue()
         {
