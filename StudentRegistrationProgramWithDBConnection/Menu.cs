@@ -69,7 +69,7 @@ namespace StudentRegistrationProgramWithDBConnection
                 output.PrintInactive($"[2] {MainMenuOptionEditOne}");
                 output.PrintInactive($"[3] {MainMenuOptionListAll}");
             }
-                output.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            output.PrintMessage($"[Q] {MainMenuOptionQuit}");
         }
         public void HandleMainMenuSelection()
         {
