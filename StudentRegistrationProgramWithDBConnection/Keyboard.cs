@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class Keyboard
+    internal class Keyboard : IInput
     {
         private Printer prompter;
         public Keyboard(Printer prompter)
@@ -22,12 +23,17 @@ namespace StudentRegistrationProgramWithDBConnection
             prompter.PrintPrompt(prompt);
             return GetStringInput();
         }
-        public int GetIntInput(string prompt)
+        public int GetIntInput()
         {
-            if (int.TryParse(GetStringInput(prompt), out int result))
+            if (int.TryParse(GetStringInput(), out int result))
                 return result;
             else
                 return -1;
+        }
+        public int GetIntInput(string prompt)
+        {
+            prompter.PrintPrompt(prompt);
+            return GetIntInput();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace StudentRegistrationProgramWithDBConnection
     internal class Menu
     {
         private Printer printer;
-        private Keyboard keyboard;
+        private IInput input;
         private DatabaseTransfer databaseTransfer;
 
         private const string MainMenuTitle = "Huvudmeny";
@@ -37,10 +37,10 @@ namespace StudentRegistrationProgramWithDBConnection
         private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
         private const string WarningStudentIsNull = "Student är null.";
 
-        public Menu(Printer printer, Keyboard keyboard, DatabaseTransfer databaseTransfer)
+        public Menu(Printer printer, IInput input, DatabaseTransfer databaseTransfer)
         {
             this.printer = printer;
-            this.keyboard = keyboard;
+            this.input = input;
             this.databaseTransfer = databaseTransfer;
         }
         public void Go()
@@ -60,7 +60,7 @@ namespace StudentRegistrationProgramWithDBConnection
         }
         public void HandleMainMenuSelection()
         {
-            switch(keyboard.GetStringInput().ToUpper())
+            switch(input.GetStringInput().ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
@@ -92,9 +92,9 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             return new Student()
             {
-                FirstName = keyboard.GetStringInput(PromptFirstName),
-                LastName = keyboard.GetStringInput(PromptLastName),
-                City = keyboard.GetStringInput(PromptCity)
+                FirstName = input.GetStringInput(PromptFirstName),
+                LastName = input.GetStringInput(PromptLastName),
+                City = input.GetStringInput(PromptCity)
             };
         }
         public void ShowEditMenu()
@@ -102,7 +102,7 @@ namespace StudentRegistrationProgramWithDBConnection
             printer.PrintTitle(EditMenuTitle);
             printer.PrintList<Student>(databaseTransfer.AllStudents());
             printer.PrintLine();
-            int idToEdit = keyboard.GetIntInput(EditMenuPromptStudentId);
+            int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
             if (databaseTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
