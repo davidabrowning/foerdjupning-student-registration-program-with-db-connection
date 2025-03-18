@@ -41,10 +41,12 @@ namespace StudentRegistrationProgramWithDBConnection
             this.input = input;
             this.dataTransfer = databaseTransfer;
         }
+
         public void Go()
         {
             ShowMainMenu();
         }
+
         public void ShowMainMenu()
         {
             output.PrintTitle(MainMenuTitle);
@@ -55,22 +57,26 @@ namespace StudentRegistrationProgramWithDBConnection
 
             HandleMainMenuSelection();
         }
+
         private void PrintMainMenuOptions()
         {
             bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
             output.PrintMessage($"[1] {MainMenuOptionRegister}");
             if (atLeastOneStudentIsRegistered)
             {
+                // Menu options styled to look normal
                 output.PrintMessage($"[2] {MainMenuOptionEditOne}");
                 output.PrintMessage($"[3] {MainMenuOptionListAll}");
             }
             else
             {
+                // Menu options styled to look inactive
                 output.PrintInactive($"[2] {MainMenuOptionEditOne}");
                 output.PrintInactive($"[3] {MainMenuOptionListAll}");
             }
             output.PrintMessage($"[Q] {MainMenuOptionQuit}");
         }
+
         public void HandleMainMenuSelection()
         {
             bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
@@ -99,6 +105,7 @@ namespace StudentRegistrationProgramWithDBConnection
                     break;
             }
         }
+
         public void ShowRegistrationMenu()
         {
             output.PrintTitle(RegisterMenuTitle);
@@ -113,16 +120,19 @@ namespace StudentRegistrationProgramWithDBConnection
 
             ShowMainMenu();
         }
+
         private Student RegisterStudent()
         {
             Student student = GetNewStudentFromUser();
             dataTransfer.Add(student);
             return student;
         }
+
         private void PrintStudent(Student student)
         {
-            output.PrintMessage(student.ToString());
+            output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
         }
+
         private Student GetNewStudentFromUser()
         {
             return new Student()
@@ -132,6 +142,7 @@ namespace StudentRegistrationProgramWithDBConnection
                 City = input.GetStringInput(PromptCity)
             };
         }
+
         public void ShowEditMenu()
         {
             output.PrintTitle(EditMenuTitle);
@@ -149,6 +160,7 @@ namespace StudentRegistrationProgramWithDBConnection
 
             ShowMainMenu();
         }
+
         private void EditStudent(int studentId)
         {
             output.PrintTitle(EditMenuTitle);
@@ -159,15 +171,16 @@ namespace StudentRegistrationProgramWithDBConnection
                 output.PrintWarning(WarningStudentIdNotFound);
                 return;
             }
-            output.PrintMessage(originalStudent.ToString());
+            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
             output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
             output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintMessage(originalStudent.ToString());
+            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
             output.PrintSectionDivider();
             output.PrintSuccess(SuccessStudentEdited);
         }
+
         public void ShowStudentList()
         {
             output.PrintTitle(ListAllMenuTitle);
@@ -179,6 +192,7 @@ namespace StudentRegistrationProgramWithDBConnection
 
             ShowMainMenu();
         }
+
         public void ShowQuitProgram()
         {
             output.PrintTitle(QuitMenuTitle);
