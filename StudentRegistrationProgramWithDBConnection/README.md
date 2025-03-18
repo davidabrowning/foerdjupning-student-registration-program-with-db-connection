@@ -1,7 +1,7 @@
 ﻿# Student Registration Program with Database Connection
-Author: David Browning (david.browning@studerande.yh.se, david.a.browning@gmail.com)
-\Program: Systemutvecklare .NET 2025-2026
-\Course: Databasutveckling
+Author: David Browning (david.browning@studerande.yh.se, david.a.browning@gmail.com)\
+Program: Systemutvecklare .NET 2025-2026\
+Course: Databasutveckling
 
 ## Program info
 Enkel konsolapplikation med EF Core databas där man kan registerar studender, uppdatera
