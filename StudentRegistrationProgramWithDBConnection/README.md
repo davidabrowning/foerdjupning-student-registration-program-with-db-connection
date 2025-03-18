@@ -4,6 +4,6 @@ Program: Systemutvecklare .NET 2025-2026\
 Course: Databasutveckling
 
 ## Program info
-Enkel konsolapplikation med EF Core databas där man kan registerar studender, uppdatera
-studenter och lista ut alla studenter. Inmatade information om studenterna lagras i
+Enkel konsolapplikation med EF Core databas där man kan registera studender, uppdatera
+studenter och lista ut alla studenter. Inmatad information om studenterna lagras i
 databasen och finns kvar nästa gång programmet körs.
