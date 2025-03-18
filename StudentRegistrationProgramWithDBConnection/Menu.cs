@@ -132,7 +132,7 @@ namespace StudentRegistrationProgramWithDBConnection
 
         private void PrintStudent(Student student)
         {
-            output.PrintMessage(student.ToString());
+            output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
         }
 
         private Student GetNewStudentFromUser()
@@ -173,12 +173,12 @@ namespace StudentRegistrationProgramWithDBConnection
                 output.PrintWarning(WarningStudentIdNotFound);
                 return;
             }
-            output.PrintMessage(originalStudent.ToString());
+            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
             output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
             output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintMessage(originalStudent.ToString());
+            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
             output.PrintSectionDivider();
             output.PrintSuccess(SuccessStudentEdited);
         }
