@@ -63,11 +63,13 @@ namespace StudentRegistrationProgramWithDBConnection
             output.PrintMessage($"[1] {MainMenuOptionRegister}");
             if (atLeastOneStudentIsRegistered)
             {
+                // Menu options styled to look normal
                 output.PrintMessage($"[2] {MainMenuOptionEditOne}");
                 output.PrintMessage($"[3] {MainMenuOptionListAll}");
             }
             else
             {
+                // Menu options styled to look inactive
                 output.PrintInactive($"[2] {MainMenuOptionEditOne}");
                 output.PrintInactive($"[3] {MainMenuOptionListAll}");
             }
