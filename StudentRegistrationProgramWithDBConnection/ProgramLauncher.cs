@@ -4,10 +4,10 @@
     {
         public void Go()
         {
-            IOutput output = new Printer();
-            IInput input = new Keyboard(output);
-            IDataTransfer dataTransfer = new DatabaseTransfer();
-            Menu menu = new Menu(output, input, dataTransfer);
+            IOutput output = new ConsoleOutput();
+            IInput input = new KeyboardInput(output);
+            IRepository repository = new DatabaseRepository();
+            Menu menu = new Menu(output, input, repository);
             menu.Go();
         }
     }

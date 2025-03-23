@@ -1,6 +1,6 @@
 ﻿namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class DatabaseTransfer: IDataTransfer
+    internal class DatabaseRepository: IRepository
     {
         private readonly ProgramDbContext dbContext = new ProgramDbContext();
         public void Add(Student student)
