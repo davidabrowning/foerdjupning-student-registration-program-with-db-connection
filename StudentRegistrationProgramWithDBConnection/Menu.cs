@@ -32,21 +32,27 @@
 
         private void PrintMainMenuOptions()
         {
-            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
-            output.PrintMessage($"[1] {MenuHelper.MainMenuOptionRegister}");
-            if (atLeastOneStudentIsRegistered)
+            if (AtLeastOneStudentIsRegistered())
             {
-                // Menu options styled to look normal
+                // All options are styled to look active
+                output.PrintMessage($"[1] {MenuHelper.MainMenuOptionRegister}");
                 output.PrintMessage($"[2] {MenuHelper.MainMenuOptionEditOne}");
                 output.PrintMessage($"[3] {MenuHelper.MainMenuOptionListAll}");
+                output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
             else
             {
-                // Menu options styled to look inactive
+                // Options 2-3 are styled to look inactive
+                output.PrintMessage($"[1] {MenuHelper.MainMenuOptionRegister}");
                 output.PrintInactive($"[2] {MenuHelper.MainMenuOptionEditOne}");
                 output.PrintInactive($"[3] {MenuHelper.MainMenuOptionListAll}");
+                output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
-            output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
+        }
+
+        private bool AtLeastOneStudentIsRegistered()
+        {
+            return dataTransfer.StudentCount() > 0;
         }
 
         public void HandleMainMenuSelection()
