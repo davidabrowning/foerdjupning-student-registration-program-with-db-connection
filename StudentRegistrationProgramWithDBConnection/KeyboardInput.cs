@@ -1,9 +1,9 @@
 ﻿namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class Keyboard : IInput
+    internal class KeyboardInput : IInput
     {
         private readonly IOutput output;
-        public Keyboard(IOutput output)
+        public KeyboardInput(IOutput output)
         {
             this.output = output;
         }

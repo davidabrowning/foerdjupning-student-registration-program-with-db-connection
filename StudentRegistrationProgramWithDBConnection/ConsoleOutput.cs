@@ -1,6 +1,6 @@
 ﻿namespace StudentRegistrationProgramWithDBConnection
 {
-    internal class Printer : IOutput
+    internal class ConsoleOutput : IOutput
     {
         private const ConsoleColor defaultColor = ConsoleColor.White;
 
