@@ -1,17 +1,19 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+
+namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Menu
     {
 
         private readonly IOutput output;
         private readonly IInput input;
-        private readonly IRepository repository;
+        private readonly IRepository dataTransfer;
 
         public Menu(IOutput output, IInput input, IRepository databaseTransfer)
         {
             this.output = output;
             this.input = input;
-            this.repository = databaseTransfer;
+            this.dataTransfer = databaseTransfer;
         }
 
         public void Go()
@@ -51,7 +53,7 @@
 
         private bool AtLeastOneStudentIsRegistered()
         {
-            return repository.StudentCount() > 0;
+            return dataTransfer.StudentCount() > 0;
         }
 
         public void HandleMainMenuSelection()
@@ -96,7 +98,7 @@
         private Student RegisterStudent()
         {
             Student student = GetNewStudentFromUser();
-            repository.Add(student);
+            dataTransfer.Add(student);
             output.PrintSectionDivider();
             return student;
         }
@@ -119,10 +121,10 @@
         public void ShowEditMenu()
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
-            output.PrintList<Student>(repository.AllStudents());
+            output.PrintList<Student>(dataTransfer.AllStudents());
             int idToEdit = input.GetIntInput(MenuHelper.EditMenuPromptStudentId);
             output.PrintSectionDivider();
-            if (repository.IsValidStudentId(idToEdit))
+            if (dataTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
                 output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
@@ -134,7 +136,7 @@
         private void EditStudent(int studentId)
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
-            Student? originalStudent = repository.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
+            Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             if (originalStudent == null)
             {
                 output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
@@ -143,7 +145,7 @@
             output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
             Student updatedStudentInfo = GetNewStudentFromUser();
             output.PrintSectionDivider();
-            repository.Update(originalStudent, updatedStudentInfo);
+            dataTransfer.Update(originalStudent, updatedStudentInfo);
             output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
             output.PrintSuccess(MenuHelper.SuccessStudentEdited);
         }
@@ -151,7 +153,7 @@
         public void ShowStudentList()
         {
             output.PrintTitle(MenuHelper.ListAllMenuTitle);
-            output.PrintList<Student>(repository.AllStudents());
+            output.PrintList<Student>(dataTransfer.AllStudents());
             output.ConfirmToContinue();
 
             ShowMainMenu();

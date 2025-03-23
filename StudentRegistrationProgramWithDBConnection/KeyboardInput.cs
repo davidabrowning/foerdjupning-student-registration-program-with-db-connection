@@ -1,4 +1,6 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+
+namespace StudentRegistrationProgramWithDBConnection
 {
     internal class KeyboardInput : IInput
     {
