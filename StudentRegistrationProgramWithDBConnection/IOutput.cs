@@ -3,7 +3,7 @@
     internal interface IOutput
     {
         void PrintTitle(string text);
-        void PrintMessage(string text);
+        void PrintNeutral(string text);
         void PrintError(string text);
         void PrintWarning(string text);
         void PrintSuccess(string text);

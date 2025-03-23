@@ -33,18 +33,18 @@
             if (AtLeastOneStudentIsRegistered())
             {
                 // All options are styled to look active
-                output.PrintMessage($"[1] {MenuHelper.MainMenuOptionRegister}");
-                output.PrintMessage($"[2] {MenuHelper.MainMenuOptionEditOne}");
-                output.PrintMessage($"[3] {MenuHelper.MainMenuOptionListAll}");
-                output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
+                output.PrintNeutral($"[1] {MenuHelper.MainMenuOptionRegister}");
+                output.PrintNeutral($"[2] {MenuHelper.MainMenuOptionEditOne}");
+                output.PrintNeutral($"[3] {MenuHelper.MainMenuOptionListAll}");
+                output.PrintNeutral($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
             else
             {
                 // Options 2-3 are styled to look inactive
-                output.PrintMessage($"[1] {MenuHelper.MainMenuOptionRegister}");
+                output.PrintNeutral($"[1] {MenuHelper.MainMenuOptionRegister}");
                 output.PrintInactive($"[2] {MenuHelper.MainMenuOptionEditOne}");
                 output.PrintInactive($"[3] {MenuHelper.MainMenuOptionListAll}");
-                output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
+                output.PrintNeutral($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
             output.PrintSectionDivider();
         }
@@ -103,7 +103,7 @@
 
         private void PrintStudent(Student student)
         {
-            output.PrintMessage(student.ToString() ?? MenuHelper.WarningStudentIsNull);
+            output.PrintNeutral(student.ToString() ?? MenuHelper.WarningStudentIsNull);
             output.PrintSectionDivider();
         }
 
@@ -141,10 +141,10 @@
                 output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
                 return;
             }
-            output.PrintMessage(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
+            output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
             Student updatedStudentInfo = GetNewStudentFromUser();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintMessage(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
+            output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
             output.PrintSuccess(MenuHelper.SuccessStudentEdited);
         }
 
@@ -152,7 +152,7 @@
         {
             output.PrintTitle(MenuHelper.ListAllMenuTitle);
             foreach (Student student in dataTransfer.AllStudents())
-               output.PrintMessage(student.ToString() ?? MenuHelper.WarningStudentIsNull);
+               output.PrintNeutral(student.ToString() ?? MenuHelper.WarningStudentIsNull);
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -161,7 +161,7 @@
         public void ShowQuitProgram()
         {
             output.PrintTitle(MenuHelper.QuitMenuTitle);
-            output.PrintMessage(MenuHelper.SuccessGoodbye);
+            output.PrintNeutral(MenuHelper.SuccessGoodbye);
             output.ConfirmToContinue();
 
             output.Clear();

@@ -23,8 +23,8 @@
             PrintLine(text, defaultColor);
             PrintSectionDivider();
         }
-        public void PrintMessage(string text) => PrintLine(text);
         public void PrintInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
+        public void PrintNeutral(string text) => PrintSection(text, defaultColor);
         public void PrintSuccess(string text) => PrintSection(text, ConsoleColor.Green);
         public void PrintWarning(string text) => PrintSection($"Varning: {text}", ConsoleColor.Yellow);
         public void PrintError(string text) => PrintSection($"Fel: {text}", ConsoleColor.Red);
@@ -50,7 +50,7 @@
         {
             foreach (T t in tList)
                 if (t != null)
-                    PrintMessage(t.ToString() ?? "");
+                    PrintNeutral(t.ToString() ?? "");
             PrintSectionDivider();
         }
     }
