@@ -10,7 +10,7 @@ namespace StudentRegistrationProgramWithDBConnection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("Configurations/appsettings.json")
                 .Build()
                 .GetSection("ConnectionStrings")["ApplicationDb"]);
         }
