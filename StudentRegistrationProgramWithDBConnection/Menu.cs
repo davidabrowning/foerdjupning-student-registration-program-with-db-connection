@@ -121,7 +121,6 @@
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
             output.PrintList<Student>(dataTransfer.AllStudents());
-            output.PrintSectionDivider();
             int idToEdit = input.GetIntInput(MenuHelper.EditMenuPromptStudentId);
             output.PrintSectionDivider();
             if (dataTransfer.IsValidStudentId(idToEdit))

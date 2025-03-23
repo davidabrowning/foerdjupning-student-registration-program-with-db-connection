@@ -51,6 +51,7 @@
             foreach (T t in tList)
                 if (t != null)
                     PrintMessage(t.ToString() ?? "");
+            PrintSectionDivider();
         }
     }
 }
