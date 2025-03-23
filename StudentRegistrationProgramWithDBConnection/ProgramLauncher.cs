@@ -1,4 +1,5 @@
-﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+﻿using StudentRegistrationProgramWithDBConnection.DTOs;
+using StudentRegistrationProgramWithDBConnection.Interfaces;
 using StudentRegistrationProgramWithDBConnection.UI;
 
 namespace StudentRegistrationProgramWithDBConnection

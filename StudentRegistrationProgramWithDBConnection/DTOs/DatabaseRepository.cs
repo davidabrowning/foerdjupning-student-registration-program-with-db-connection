@@ -1,7 +1,7 @@
 ﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
 using StudentRegistrationProgramWithDBConnection.Models;
 
-namespace StudentRegistrationProgramWithDBConnection
+namespace StudentRegistrationProgramWithDBConnection.DTOs
 {
     internal class DatabaseRepository: IRepository
     {

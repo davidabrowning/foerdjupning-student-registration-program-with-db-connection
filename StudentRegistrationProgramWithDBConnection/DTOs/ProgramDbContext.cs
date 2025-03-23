@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using StudentRegistrationProgramWithDBConnection.Models;
 
-namespace StudentRegistrationProgramWithDBConnection
+namespace StudentRegistrationProgramWithDBConnection.DTOs
 {
     internal class ProgramDbContext : DbContext
     {
