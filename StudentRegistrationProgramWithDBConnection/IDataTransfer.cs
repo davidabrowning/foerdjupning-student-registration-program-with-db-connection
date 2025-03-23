@@ -3,9 +3,9 @@
     internal interface IDataTransfer
     {
         void Add(Student student);
-        List<Student> AllStudents();
-        bool IsValidStudentId(int studentId);
         void Update(Student originalStudent, Student updatedStudent);
+        bool IsValidStudentId(int studentId);
         int StudentCount();
+        List<Student> AllStudents();
     }
 }
