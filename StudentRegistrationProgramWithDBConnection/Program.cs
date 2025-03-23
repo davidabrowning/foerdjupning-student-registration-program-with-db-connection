@@ -1,4 +1,6 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿using StudentRegistrationProgramWithDBConnection.Services;
+
+namespace StudentRegistrationProgramWithDBConnection
 {
     internal class Program
     {

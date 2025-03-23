@@ -2,7 +2,7 @@
 using StudentRegistrationProgramWithDBConnection.Models;
 using StudentRegistrationProgramWithDBConnection.Utilities;
 
-namespace StudentRegistrationProgramWithDBConnection
+namespace StudentRegistrationProgramWithDBConnection.Services
 {
     internal class Menu
     {
@@ -15,7 +15,7 @@ namespace StudentRegistrationProgramWithDBConnection
         {
             this.output = output;
             this.input = input;
-            this.dataTransfer = databaseTransfer;
+            dataTransfer = databaseTransfer;
         }
 
         public void Go()
@@ -123,7 +123,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowEditMenu()
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
-            output.PrintList<Student>(dataTransfer.AllStudents());
+            output.PrintList(dataTransfer.AllStudents());
             int idToEdit = input.GetIntInput(MenuHelper.EditMenuPromptStudentId);
             output.PrintSectionDivider();
             if (dataTransfer.IsValidStudentId(idToEdit))
@@ -155,7 +155,7 @@ namespace StudentRegistrationProgramWithDBConnection
         public void ShowStudentList()
         {
             output.PrintTitle(MenuHelper.ListAllMenuTitle);
-            output.PrintList<Student>(dataTransfer.AllStudents());
+            output.PrintList(dataTransfer.AllStudents());
             output.ConfirmToContinue();
 
             ShowMainMenu();
