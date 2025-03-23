@@ -33,6 +33,7 @@
             Clear();
             PrintLine("\n");
             PrintLine($"===== {text} =====");
+            PrintSectionDivider();
         }
         public void ConfirmToContinue()
         {

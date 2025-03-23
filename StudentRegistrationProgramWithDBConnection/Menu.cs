@@ -22,7 +22,6 @@
         public void ShowMainMenu()
         {
             output.PrintTitle(MenuHelper.MainMenuTitle);
-            output.PrintSectionDivider();
             PrintMainMenuOptions();
             output.PrintSectionDivider();
             output.PrintPrompt(MenuHelper.MainMenuPrompt);
@@ -86,7 +85,6 @@
         public void ShowRegistrationMenu()
         {
             output.PrintTitle(MenuHelper.RegisterMenuTitle);
-            output.PrintSectionDivider();
             Student student = RegisterStudent();
             output.PrintSectionDivider();
             PrintStudent(student);
@@ -123,7 +121,6 @@
         public void ShowEditMenu()
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
-            output.PrintSectionDivider();
             output.PrintList<Student>(dataTransfer.AllStudents());
             output.PrintSectionDivider();
             int idToEdit = input.GetIntInput(MenuHelper.EditMenuPromptStudentId);
@@ -141,7 +138,6 @@
         private void EditStudent(int studentId)
         {
             output.PrintTitle(MenuHelper.EditMenuTitle);
-            output.PrintSectionDivider();
             Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             if (originalStudent == null)
             {
@@ -161,7 +157,6 @@
         public void ShowStudentList()
         {
             output.PrintTitle(MenuHelper.ListAllMenuTitle);
-            output.PrintSectionDivider();
             foreach (Student student in dataTransfer.AllStudents())
                output.PrintMessage(student.ToString() ?? MenuHelper.WarningStudentIsNull);
             output.PrintSectionDivider();
@@ -173,7 +168,6 @@
         public void ShowQuitProgram()
         {
             output.PrintTitle(MenuHelper.QuitMenuTitle);
-            output.PrintSectionDivider();
             output.PrintMessage(MenuHelper.SuccessGoodbye);
             output.PrintSectionDivider();
             output.ConfirmToContinue();
