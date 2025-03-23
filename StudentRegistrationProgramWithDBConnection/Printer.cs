@@ -18,11 +18,16 @@
         private void PrintLine(string text) => PrintLine(text, defaultColor);
         public void PrintLine() => PrintLine("");
         public void PrintSectionDivider() => PrintLine();
+        private void PrintSection(string text, ConsoleColor textColor)
+        {
+            PrintLine(text, defaultColor);
+            PrintSectionDivider();
+        }
         public void PrintMessage(string text) => PrintLine(text);
-        public void PrintSuccess(string text) => PrintLine(text, ConsoleColor.Green);
-        public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
-        public void PrintError(string text) => PrintLine($"Fel: {text}", ConsoleColor.Red);
         public void PrintInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
+        public void PrintSuccess(string text) => PrintSection(text, ConsoleColor.Green);
+        public void PrintWarning(string text) => PrintSection($"Varning: {text}", ConsoleColor.Yellow);
+        public void PrintError(string text) => PrintSection($"Fel: {text}", ConsoleColor.Red);
         public void PrintPrompt(string text)
         {
             Print($"{text} ", ConsoleColor.Cyan);

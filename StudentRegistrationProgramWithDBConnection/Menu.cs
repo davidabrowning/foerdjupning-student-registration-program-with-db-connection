@@ -88,7 +88,6 @@
             Student student = RegisterStudent();
             PrintStudent(student);
             output.PrintSuccess(MenuHelper.SuccessStudentRegistered);
-            output.PrintSectionDivider();
             output.ConfirmToContinue();
 
             ShowMainMenu();
