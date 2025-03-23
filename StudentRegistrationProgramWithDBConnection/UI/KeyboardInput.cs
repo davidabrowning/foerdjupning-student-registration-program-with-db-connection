@@ -1,4 +1,5 @@
 ﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+using StudentRegistrationProgramWithDBConnection.Utilities;
 
 namespace StudentRegistrationProgramWithDBConnection.UI
 {
@@ -9,26 +10,24 @@ namespace StudentRegistrationProgramWithDBConnection.UI
         {
             this.output = output;
         }
-        public string GetStringInput()
-        {
-            return (Console.ReadLine() ?? "").Trim();
-        }
         public string GetStringInput(string prompt)
         {
-            output.PrintPrompt(prompt);
-            return GetStringInput();
-        }
-        public int GetIntInput()
-        {
-            if (int.TryParse(GetStringInput(), out int result))
-                return result;
-            else
-                return -1;
+            while (true)
+            {
+                output.PrintPrompt(prompt);
+                string userInput = Console.ReadLine() ?? "".Trim();
+                if (ValidationHelper.IsValidStringInput(userInput))
+                    return userInput;
+            }
         }
         public int GetIntInput(string prompt)
         {
-            output.PrintPrompt(prompt);
-            return GetIntInput();
+            while (true)
+            {
+                string userInputAsString = GetStringInput(prompt);
+                if (ValidationHelper.IsValidIntInput(userInputAsString))
+                    return Convert.ToInt32(userInputAsString);
+            }
         }
     }
 }

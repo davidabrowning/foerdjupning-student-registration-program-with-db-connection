@@ -27,7 +27,6 @@ namespace StudentRegistrationProgramWithDBConnection.Services
         {
             output.PrintTitle(MenuHelper.MainMenuTitle);
             PrintMainMenuOptions();
-            output.PrintPrompt(MenuHelper.MainMenuPrompt);
 
             HandleMainMenuSelection();
         }
@@ -60,7 +59,7 @@ namespace StudentRegistrationProgramWithDBConnection.Services
 
         public void HandleMainMenuSelection()
         {
-            switch (input.GetStringInput().ToUpper())
+            switch (input.GetStringInput(MenuHelper.MainMenuPrompt).ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
