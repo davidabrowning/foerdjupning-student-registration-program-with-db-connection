@@ -6,7 +6,7 @@
         {
             IOutput output = new Printer();
             IInput input = new Keyboard(output);
-            IDataTransfer dataTransfer = new DatabaseTransfer();
+            IRepository dataTransfer = new DatabaseTransfer();
             Menu menu = new Menu(output, input, dataTransfer);
             menu.Go();
         }

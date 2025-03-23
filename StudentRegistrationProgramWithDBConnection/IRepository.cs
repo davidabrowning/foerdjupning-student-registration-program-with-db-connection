@@ -1,11 +1,11 @@
 ﻿namespace StudentRegistrationProgramWithDBConnection
 {
-    internal interface IDataTransfer
+    internal interface IRepository
     {
         void Add(Student student);
-        void Update(Student originalStudent, Student updatedStudent);
-        bool IsValidStudentId(int studentId);
-        int StudentCount();
         List<Student> AllStudents();
+        bool IsValidStudentId(int studentId);
+        void Update(Student originalStudent, Student updatedStudent);
+        int StudentCount();
     }
 }
