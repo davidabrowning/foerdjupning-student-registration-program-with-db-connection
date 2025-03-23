@@ -127,7 +127,6 @@
                 EditStudent(idToEdit);
             else
                 output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
-            output.PrintSectionDivider();
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -143,12 +142,9 @@
                 return;
             }
             output.PrintMessage(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
-            output.PrintSectionDivider();
             Student updatedStudentInfo = GetNewStudentFromUser();
-            output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
             output.PrintMessage(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
-            output.PrintSectionDivider();
             output.PrintSuccess(MenuHelper.SuccessStudentEdited);
         }
 
@@ -157,7 +153,6 @@
             output.PrintTitle(MenuHelper.ListAllMenuTitle);
             foreach (Student student in dataTransfer.AllStudents())
                output.PrintMessage(student.ToString() ?? MenuHelper.WarningStudentIsNull);
-            output.PrintSectionDivider();
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -167,7 +162,6 @@
         {
             output.PrintTitle(MenuHelper.QuitMenuTitle);
             output.PrintMessage(MenuHelper.SuccessGoodbye);
-            output.PrintSectionDivider();
             output.ConfirmToContinue();
 
             output.Clear();
@@ -177,7 +171,6 @@
         {
             output.PrintSectionDivider();
             output.PrintWarning(MenuHelper.WarningUnexpectedInput);
-            output.PrintSectionDivider();
             output.ConfirmToContinue();
 
             ShowMainMenu();
