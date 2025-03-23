@@ -7,7 +7,8 @@
         void PrintError(string text);
         void PrintWarning(string text);
         void PrintSuccess(string text);
-        void PrintInactive(string text);
+        void PrintListItemActive(string text);
+        void PrintListItemInactive(string text);
         void PrintPrompt(string text);
         void PrintList<T>(IEnumerable<T> list);
         void PrintSectionDivider();

@@ -20,10 +20,11 @@
         public void PrintSectionDivider() => PrintLine();
         private void PrintSection(string text, ConsoleColor textColor)
         {
-            PrintLine(text, defaultColor);
+            PrintLine(text, textColor);
             PrintSectionDivider();
         }
-        public void PrintInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
+        public void PrintListItemActive(string text) => PrintLine(text, defaultColor);
+        public void PrintListItemInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
         public void PrintNeutral(string text) => PrintSection(text, defaultColor);
         public void PrintSuccess(string text) => PrintSection(text, ConsoleColor.Green);
         public void PrintWarning(string text) => PrintSection($"Varning: {text}", ConsoleColor.Yellow);
@@ -42,7 +43,7 @@
         }
         public void ConfirmToContinue()
         {
-            PrintInactive("Tryck ENTER för att fortsätta.");
+            PrintListItemInactive("Tryck ENTER för att fortsätta.");
             Indent();
             Console.ReadLine();
         }
@@ -50,7 +51,7 @@
         {
             foreach (T t in tList)
                 if (t != null)
-                    PrintNeutral(t.ToString() ?? "");
+                    PrintListItemActive(t.ToString() ?? "");
             PrintSectionDivider();
         }
     }
