@@ -1,6 +1,6 @@
 ﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
 
-namespace StudentRegistrationProgramWithDBConnection
+namespace StudentRegistrationProgramWithDBConnection.UI
 {
     internal class ConsoleOutput : IOutput
     {
