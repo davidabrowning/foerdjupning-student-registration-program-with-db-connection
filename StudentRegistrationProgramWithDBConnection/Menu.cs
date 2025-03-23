@@ -57,20 +57,19 @@
 
         public void HandleMainMenuSelection()
         {
-            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
             switch (input.GetStringInput().ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
                     break;
                 case "2":
-                    if (atLeastOneStudentIsRegistered)
+                    if (AtLeastOneStudentIsRegistered())
                         ShowEditMenu();
                     else
                         ShowInvalidMenuInput();
                         break;
                 case "3":
-                    if (atLeastOneStudentIsRegistered)
+                    if (AtLeastOneStudentIsRegistered())
                         ShowStudentList();
                     else
                         ShowInvalidMenuInput();
