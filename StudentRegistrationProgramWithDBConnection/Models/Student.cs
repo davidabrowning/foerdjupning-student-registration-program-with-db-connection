@@ -1,4 +1,4 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿namespace StudentRegistrationProgramWithDBConnection.Models
 {
     internal class Student
     {

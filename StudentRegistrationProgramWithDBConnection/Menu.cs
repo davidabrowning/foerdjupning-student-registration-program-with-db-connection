@@ -1,4 +1,5 @@
 ﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+using StudentRegistrationProgramWithDBConnection.Models;
 
 namespace StudentRegistrationProgramWithDBConnection
 {
