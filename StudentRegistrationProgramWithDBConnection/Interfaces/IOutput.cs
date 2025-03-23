@@ -1,4 +1,4 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿namespace StudentRegistrationProgramWithDBConnection.Interfaces
 {
     internal interface IOutput
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using StudentRegistrationProgramWithDBConnection.Models;
 
-namespace StudentRegistrationProgramWithDBConnection
+namespace StudentRegistrationProgramWithDBConnection.DTOs
 {
     internal class ProgramDbContext : DbContext
     {
@@ -9,7 +10,7 @@ namespace StudentRegistrationProgramWithDBConnection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("Configurations/appsettings.json")
                 .Build()
                 .GetSection("ConnectionStrings")["ApplicationDb"]);
         }

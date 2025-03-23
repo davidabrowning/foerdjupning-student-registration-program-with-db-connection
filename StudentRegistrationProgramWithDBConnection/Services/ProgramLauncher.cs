@@ -1,4 +1,8 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿using StudentRegistrationProgramWithDBConnection.DTOs;
+using StudentRegistrationProgramWithDBConnection.Interfaces;
+using StudentRegistrationProgramWithDBConnection.UI;
+
+namespace StudentRegistrationProgramWithDBConnection.Services
 {
     internal class ProgramLauncher
     {

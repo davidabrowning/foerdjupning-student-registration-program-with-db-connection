@@ -1,4 +1,6 @@
-﻿namespace StudentRegistrationProgramWithDBConnection
+﻿using StudentRegistrationProgramWithDBConnection.Models;
+
+namespace StudentRegistrationProgramWithDBConnection.Interfaces
 {
     internal interface IRepository
     {
