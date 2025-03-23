@@ -23,7 +23,6 @@
         {
             output.PrintTitle(MenuHelper.MainMenuTitle);
             PrintMainMenuOptions();
-            output.PrintSectionDivider();
             output.PrintPrompt(MenuHelper.MainMenuPrompt);
 
             HandleMainMenuSelection();
@@ -47,6 +46,7 @@
                 output.PrintInactive($"[3] {MenuHelper.MainMenuOptionListAll}");
                 output.PrintMessage($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
+            output.PrintSectionDivider();
         }
 
         private bool AtLeastOneStudentIsRegistered()
