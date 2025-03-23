@@ -2,26 +2,6 @@
 {
     internal class Menu
     {
-        private const string MainMenuTitle = "Huvudmeny";
-        private const string MainMenuOptionRegister = "Registrera ny student";
-        private const string MainMenuOptionEditOne = "Ändra student";
-        private const string MainMenuOptionListAll = "Lista alla studenter";
-        private const string MainMenuOptionQuit = "Avsluta programmet";
-        private const string MainMenuPrompt = "Ditt val:";
-        private const string RegisterMenuTitle = "Registrera ny student";
-        private const string EditMenuTitle = "Ändra student";
-        private const string EditMenuPromptStudentId = "Student att ändra (ange student id-nummer):";
-        private const string ListAllMenuTitle = "Lista alla studenter";
-        private const string QuitMenuTitle = "Avsluta programmet";
-        private const string PromptFirstName = "Förnamn:";
-        private const string PromptLastName = "Efternamn:";
-        private const string PromptCity = "Stad:";
-        private const string SuccessStudentRegistered = "Ny student registerad.";
-        private const string SuccessStudentEdited = "Student uppdaterad.";
-        private const string SuccessGoodbye = "Tack och hej då!";
-        private const string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
-        private const string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
-        private const string WarningStudentIsNull = "Student är null.";
 
         private readonly IOutput output;
         private readonly IInput input;
@@ -41,50 +21,54 @@
 
         public void ShowMainMenu()
         {
-            output.PrintTitle(MainMenuTitle);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.MainMenuTitle);
             PrintMainMenuOptions();
-            output.PrintSectionDivider();
-            output.PrintPrompt(MainMenuPrompt);
+            output.PrintPrompt(MenuHelper.MainMenuPrompt);
 
             HandleMainMenuSelection();
         }
 
         private void PrintMainMenuOptions()
         {
-            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
-            output.PrintMessage($"[1] {MainMenuOptionRegister}");
-            if (atLeastOneStudentIsRegistered)
+            if (AtLeastOneStudentIsRegistered())
             {
-                // Menu options styled to look normal
-                output.PrintMessage($"[2] {MainMenuOptionEditOne}");
-                output.PrintMessage($"[3] {MainMenuOptionListAll}");
+                // All options are styled to look active
+                output.PrintListItemActive($"[1] {MenuHelper.MainMenuOptionRegister}");
+                output.PrintListItemActive($"[2] {MenuHelper.MainMenuOptionEditOne}");
+                output.PrintListItemActive($"[3] {MenuHelper.MainMenuOptionListAll}");
+                output.PrintListItemActive($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
             else
             {
-                // Menu options styled to look inactive
-                output.PrintInactive($"[2] {MainMenuOptionEditOne}");
-                output.PrintInactive($"[3] {MainMenuOptionListAll}");
+                // Options 2-3 are styled to look inactive
+                output.PrintListItemActive($"[1] {MenuHelper.MainMenuOptionRegister}");
+                output.PrintListItemInactive($"[2] {MenuHelper.MainMenuOptionEditOne}");
+                output.PrintListItemInactive($"[3] {MenuHelper.MainMenuOptionListAll}");
+                output.PrintListItemActive($"[Q] {MenuHelper.MainMenuOptionQuit}");
             }
-            output.PrintMessage($"[Q] {MainMenuOptionQuit}");
+            output.PrintSectionDivider();
+        }
+
+        private bool AtLeastOneStudentIsRegistered()
+        {
+            return dataTransfer.StudentCount() > 0;
         }
 
         public void HandleMainMenuSelection()
         {
-            bool atLeastOneStudentIsRegistered = dataTransfer.StudentCount() > 0;
             switch (input.GetStringInput().ToUpper())
             {
                 case "1":
                     ShowRegistrationMenu();
                     break;
                 case "2":
-                    if (atLeastOneStudentIsRegistered)
+                    if (AtLeastOneStudentIsRegistered())
                         ShowEditMenu();
                     else
                         ShowInvalidMenuInput();
                         break;
                 case "3":
-                    if (atLeastOneStudentIsRegistered)
+                    if (AtLeastOneStudentIsRegistered())
                         ShowStudentList();
                     else
                         ShowInvalidMenuInput();
@@ -100,14 +84,10 @@
 
         public void ShowRegistrationMenu()
         {
-            output.PrintTitle(RegisterMenuTitle);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.RegisterMenuTitle);
             Student student = RegisterStudent();
-            output.PrintSectionDivider();
             PrintStudent(student);
-            output.PrintSectionDivider();
-            output.PrintSuccess(SuccessStudentRegistered);
-            output.PrintSectionDivider();
+            output.PrintSuccess(MenuHelper.SuccessStudentRegistered);
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -117,37 +97,35 @@
         {
             Student student = GetNewStudentFromUser();
             dataTransfer.Add(student);
+            output.PrintSectionDivider();
             return student;
         }
 
         private void PrintStudent(Student student)
         {
-            output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
+            output.PrintNeutral(student.ToString() ?? MenuHelper.WarningStudentIsNull);
         }
 
         private Student GetNewStudentFromUser()
         {
             return new Student()
             {
-                FirstName = input.GetStringInput(PromptFirstName),
-                LastName = input.GetStringInput(PromptLastName),
-                City = input.GetStringInput(PromptCity)
+                FirstName = input.GetStringInput(MenuHelper.PromptFirstName),
+                LastName = input.GetStringInput(MenuHelper.PromptLastName),
+                City = input.GetStringInput(MenuHelper.PromptCity)
             };
         }
 
         public void ShowEditMenu()
         {
-            output.PrintTitle(EditMenuTitle);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.EditMenuTitle);
             output.PrintList<Student>(dataTransfer.AllStudents());
-            output.PrintSectionDivider();
-            int idToEdit = input.GetIntInput(EditMenuPromptStudentId);
+            int idToEdit = input.GetIntInput(MenuHelper.EditMenuPromptStudentId);
             output.PrintSectionDivider();
             if (dataTransfer.IsValidStudentId(idToEdit))
                 EditStudent(idToEdit);
             else
-                output.PrintWarning(WarningStudentIdNotFound);
-            output.PrintSectionDivider();
+                output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -155,31 +133,25 @@
 
         private void EditStudent(int studentId)
         {
-            output.PrintTitle(EditMenuTitle);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.EditMenuTitle);
             Student? originalStudent = dataTransfer.AllStudents().Where(s => s.StudentId == studentId).FirstOrDefault();
             if (originalStudent == null)
             {
-                output.PrintWarning(WarningStudentIdNotFound);
+                output.PrintWarning(MenuHelper.WarningStudentIdNotFound);
                 return;
             }
-            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
-            output.PrintSectionDivider();
+            output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
             Student updatedStudentInfo = GetNewStudentFromUser();
             output.PrintSectionDivider();
             dataTransfer.Update(originalStudent, updatedStudentInfo);
-            output.PrintMessage(originalStudent.ToString() ?? WarningStudentIsNull);
-            output.PrintSectionDivider();
-            output.PrintSuccess(SuccessStudentEdited);
+            output.PrintNeutral(originalStudent.ToString() ?? MenuHelper.WarningStudentIsNull);
+            output.PrintSuccess(MenuHelper.SuccessStudentEdited);
         }
 
         public void ShowStudentList()
         {
-            output.PrintTitle(ListAllMenuTitle);
-            output.PrintSectionDivider();
-            foreach (Student student in dataTransfer.AllStudents())
-               output.PrintMessage(student.ToString() ?? WarningStudentIsNull);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.ListAllMenuTitle);
+            output.PrintList<Student>(dataTransfer.AllStudents());
             output.ConfirmToContinue();
 
             ShowMainMenu();
@@ -187,10 +159,8 @@
 
         public void ShowQuitProgram()
         {
-            output.PrintTitle(QuitMenuTitle);
-            output.PrintSectionDivider();
-            output.PrintMessage(SuccessGoodbye);
-            output.PrintSectionDivider();
+            output.PrintTitle(MenuHelper.QuitMenuTitle);
+            output.PrintNeutral(MenuHelper.SuccessGoodbye);
             output.ConfirmToContinue();
 
             output.Clear();
@@ -199,8 +169,7 @@
         public void ShowInvalidMenuInput()
         {
             output.PrintSectionDivider();
-            output.PrintWarning(WarningUnexpectedInput);
-            output.PrintSectionDivider();
+            output.PrintWarning(MenuHelper.WarningUnexpectedInput);
             output.ConfirmToContinue();
 
             ShowMainMenu();

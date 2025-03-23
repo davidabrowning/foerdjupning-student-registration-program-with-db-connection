@@ -18,11 +18,17 @@
         private void PrintLine(string text) => PrintLine(text, defaultColor);
         public void PrintLine() => PrintLine("");
         public void PrintSectionDivider() => PrintLine();
-        public void PrintMessage(string text) => PrintLine(text);
-        public void PrintSuccess(string text) => PrintLine(text, ConsoleColor.Green);
-        public void PrintWarning(string text) => PrintLine($"Varning: {text}", ConsoleColor.Yellow);
-        public void PrintError(string text) => PrintLine($"Fel: {text}", ConsoleColor.Red);
-        public void PrintInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
+        private void PrintSection(string text, ConsoleColor textColor)
+        {
+            PrintLine(text, textColor);
+            PrintSectionDivider();
+        }
+        public void PrintListItemActive(string text) => PrintLine(text, defaultColor);
+        public void PrintListItemInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
+        public void PrintNeutral(string text) => PrintSection(text, defaultColor);
+        public void PrintSuccess(string text) => PrintSection(text, ConsoleColor.Green);
+        public void PrintWarning(string text) => PrintSection($"Varning: {text}", ConsoleColor.Yellow);
+        public void PrintError(string text) => PrintSection($"Fel: {text}", ConsoleColor.Red);
         public void PrintPrompt(string text)
         {
             Print($"{text} ", ConsoleColor.Cyan);
@@ -33,10 +39,11 @@
             Clear();
             PrintLine("\n");
             PrintLine($"===== {text} =====");
+            PrintSectionDivider();
         }
         public void ConfirmToContinue()
         {
-            PrintInactive("Tryck ENTER för att fortsätta.");
+            PrintListItemInactive("Tryck ENTER för att fortsätta.");
             Indent();
             Console.ReadLine();
         }
@@ -44,7 +51,8 @@
         {
             foreach (T t in tList)
                 if (t != null)
-                    PrintMessage(t.ToString() ?? "");
+                    PrintListItemActive(t.ToString() ?? "");
+            PrintSectionDivider();
         }
     }
 }
