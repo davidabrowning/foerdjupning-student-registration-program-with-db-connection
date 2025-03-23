@@ -86,7 +86,6 @@
         {
             output.PrintTitle(MenuHelper.RegisterMenuTitle);
             Student student = RegisterStudent();
-            output.PrintSectionDivider();
             PrintStudent(student);
             output.PrintSectionDivider();
             output.PrintSuccess(MenuHelper.SuccessStudentRegistered);
@@ -100,6 +99,7 @@
         {
             Student student = GetNewStudentFromUser();
             dataTransfer.Add(student);
+            output.PrintSectionDivider();
             return student;
         }
 
