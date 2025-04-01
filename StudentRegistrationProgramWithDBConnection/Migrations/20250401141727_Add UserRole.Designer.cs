@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentRegistrationProgramWithDBConnection.DTOs;
 
@@ -10,9 +11,11 @@ using StudentRegistrationProgramWithDBConnection.DTOs;
 namespace StudentRegistrationProgramWithDBConnection.Migrations
 {
     [DbContext(typeof(ProgramDbContext))]
-    partial class StudentRegistrationProgramWithDBConnectionDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250401141727_Add UserRole")]
+    partial class AddUserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

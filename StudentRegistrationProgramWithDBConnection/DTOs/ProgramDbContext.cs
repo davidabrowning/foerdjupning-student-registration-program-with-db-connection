@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Part2RegistrationProgramWithDB.Models;
 using StudentRegistrationProgramWithDBConnection.Models;
 
 namespace StudentRegistrationProgramWithDBConnection.DTOs
@@ -7,6 +8,7 @@ namespace StudentRegistrationProgramWithDBConnection.DTOs
     internal class ProgramDbContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(new ConfigurationBuilder()
