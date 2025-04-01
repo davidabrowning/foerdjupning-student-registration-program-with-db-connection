@@ -31,6 +31,7 @@ namespace StudentRegistrationProgramWithDBConnection.Utilities
         public static string WarningInvalidUsernameOrPassword = "Lyckades inte hitta användare med detta användarnamn och lösenord.";
         public static string WarningStudentIdNotFound = "Lyckades inte hitta student med detta id-nummer.";
         public static string WarningUnexpectedInput = "Oväntad inmatning. Försök igen.";
+        public static string WarningAccessRestricted = "Otillräckliga systemrättigheter. Försök igen.";
         public static string WarningStudentIsNull = "Student är null.";
     }
 }

@@ -81,7 +81,10 @@ namespace StudentRegistrationProgramWithDBConnection.Services
             switch (input.GetStringInput(MenuHelper.MainMenuPrompt).ToUpper())
             {
                 case "1":
-                    ShowRegistrationMenu();
+                    if (UserSession.SystemUser.UserRole.CanAddStudent)
+                        ShowRegistrationMenu();
+                    else
+                        ShowAccessRestricted();
                     break;
                 case "2":
                     if (AtLeastOneStudentIsRegistered())
@@ -192,6 +195,15 @@ namespace StudentRegistrationProgramWithDBConnection.Services
         {
             output.PrintSectionDivider();
             output.PrintWarning(MenuHelper.WarningUnexpectedInput);
+            output.ConfirmToContinue();
+
+            ShowMainMenu();
+        }
+
+        public void ShowAccessRestricted()
+        {
+            output.PrintSectionDivider();
+            output.PrintWarning(MenuHelper.WarningAccessRestricted);
             output.ConfirmToContinue();
 
             ShowMainMenu();
