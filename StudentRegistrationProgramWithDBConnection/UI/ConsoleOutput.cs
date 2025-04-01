@@ -29,6 +29,7 @@ namespace StudentRegistrationProgramWithDBConnection.UI
         public void PrintListItemActive(string text) => PrintLine(text, defaultColor);
         public void PrintListItemInactive(string text) => PrintLine(text, ConsoleColor.DarkGray);
         public void PrintNeutral(string text) => PrintSection(text, defaultColor);
+        public void PrintSubtle(string text) => PrintSection(text, ConsoleColor.DarkGray);
         public void PrintSuccess(string text) => PrintSection(text, ConsoleColor.Green);
         public void PrintWarning(string text) => PrintSection($"Varning: {text}", ConsoleColor.Yellow);
         public void PrintError(string text) => PrintSection($"Fel: {text}", ConsoleColor.Red);
@@ -42,9 +43,9 @@ namespace StudentRegistrationProgramWithDBConnection.UI
             Clear();
             PrintLine("\n");
             if (UserSession.IsLoggedIn)
-                PrintLine($"Inloggad som {UserSession.SystemUser}");
+                PrintSubtle($"Inloggad som {UserSession.SystemUser}");
             else
-                PrintLine("Inte inloggad");
+                PrintSubtle("Inte inloggad");
             PrintLine($"===== {text} =====");
             PrintSectionDivider();
         }
