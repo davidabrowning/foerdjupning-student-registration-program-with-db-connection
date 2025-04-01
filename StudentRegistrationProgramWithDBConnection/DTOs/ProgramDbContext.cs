@@ -8,6 +8,7 @@ namespace StudentRegistrationProgramWithDBConnection.DTOs
     internal class ProgramDbContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<SystemUser> SystemUsers { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
