@@ -1,4 +1,5 @@
-﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+﻿using Part2RegistrationProgramWithDB.Services;
+using StudentRegistrationProgramWithDBConnection.Interfaces;
 using StudentRegistrationProgramWithDBConnection.Models;
 using StudentRegistrationProgramWithDBConnection.Utilities;
 
@@ -20,7 +21,25 @@ namespace StudentRegistrationProgramWithDBConnection.Services
 
         public void Go()
         {
-            ShowMainMenu();
+            ShowLoginMenu();
+        }
+
+        public void ShowLoginMenu()
+        {
+            output.PrintTitle(MenuHelper.LoginMenuTitle);
+            string username = input.GetStringInput(MenuHelper.PromptUsername);
+            string password = input.GetStringInput(MenuHelper.PromptPassword);
+            if (repository.IsValidUsernameAndPassword(username, password))
+            {
+                UserSession.SystemUser = repository.GetSystemUser(username);
+                ShowMainMenu();
+            }
+            else
+            {
+                output.PrintWarning(MenuHelper.WarningInvalidUsernameOrPassword);
+                output.ConfirmToContinue();
+                ShowLoginMenu();
+            }
         }
 
         public void ShowMainMenu()

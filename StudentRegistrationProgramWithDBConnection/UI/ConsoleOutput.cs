@@ -1,4 +1,5 @@
-﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+﻿using Part2RegistrationProgramWithDB.Services;
+using StudentRegistrationProgramWithDBConnection.Interfaces;
 
 namespace StudentRegistrationProgramWithDBConnection.UI
 {
@@ -40,6 +41,10 @@ namespace StudentRegistrationProgramWithDBConnection.UI
         {
             Clear();
             PrintLine("\n");
+            if (UserSession.IsLoggedIn)
+                PrintLine($"Inloggad som {UserSession.SystemUser}");
+            else
+                PrintLine("Inte inloggad");
             PrintLine($"===== {text} =====");
             PrintSectionDivider();
         }

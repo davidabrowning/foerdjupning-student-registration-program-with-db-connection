@@ -1,4 +1,5 @@
-﻿using StudentRegistrationProgramWithDBConnection.Interfaces;
+﻿using Part2RegistrationProgramWithDB.Models;
+using StudentRegistrationProgramWithDBConnection.Interfaces;
 using StudentRegistrationProgramWithDBConnection.Models;
 
 namespace StudentRegistrationProgramWithDBConnection.DTOs
@@ -29,6 +30,16 @@ namespace StudentRegistrationProgramWithDBConnection.DTOs
         public int StudentCount()
         {
             return AllStudents().Count();
+        }
+        public bool IsValidUsernameAndPassword(string username, string password)
+        {
+            return dbContext.SystemUsers
+                .Where(su => Equals(username, su.Username) && Equals(password, su.Password))
+                .Any();
+        }
+        public SystemUser? GetSystemUser(string username)
+        {
+            return dbContext.SystemUsers.Where(su => Equals(username, su.Username)).FirstOrDefault();
         }
     }
 }
