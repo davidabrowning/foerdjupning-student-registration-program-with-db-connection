@@ -1,4 +1,5 @@
-﻿using Part2RegistrationProgramWithDB.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Part2RegistrationProgramWithDB.Models;
 using StudentRegistrationProgramWithDBConnection.Interfaces;
 using StudentRegistrationProgramWithDBConnection.Models;
 
@@ -39,7 +40,9 @@ namespace StudentRegistrationProgramWithDBConnection.DTOs
         }
         public SystemUser? GetSystemUser(string username)
         {
-            return dbContext.SystemUsers.Where(su => Equals(username, su.Username)).FirstOrDefault();
+            return dbContext.SystemUsers
+                .Include(su => su.UserRole)
+                .Where(su => Equals(username, su.Username)).FirstOrDefault();
         }
     }
 }
