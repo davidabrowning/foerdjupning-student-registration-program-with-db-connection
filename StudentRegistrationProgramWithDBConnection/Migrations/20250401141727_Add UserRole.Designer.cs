@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentRegistrationProgramWithDBConnection.DTOs;
 
@@ -10,9 +11,11 @@ using StudentRegistrationProgramWithDBConnection.DTOs;
 namespace StudentRegistrationProgramWithDBConnection.Migrations
 {
     [DbContext(typeof(ProgramDbContext))]
-    partial class StudentRegistrationProgramWithDBConnectionDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250401141727_Add UserRole")]
+    partial class AddUserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,32 +23,6 @@ namespace StudentRegistrationProgramWithDBConnection.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Part2RegistrationProgramWithDB.Models.SystemUser", b =>
-                {
-                    b.Property<int>("SystemUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SystemUserId"));
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SystemUserId");
-
-                    b.HasIndex("UserRoleId");
-
-                    b.ToTable("SystemUsers");
-                });
 
             modelBuilder.Entity("Part2RegistrationProgramWithDB.Models.UserRole", b =>
                 {
@@ -99,17 +76,6 @@ namespace StudentRegistrationProgramWithDBConnection.Migrations
                     b.HasKey("StudentId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("Part2RegistrationProgramWithDB.Models.SystemUser", b =>
-                {
-                    b.HasOne("Part2RegistrationProgramWithDB.Models.UserRole", "UserRole")
-                        .WithMany()
-                        .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserRole");
                 });
 #pragma warning restore 612, 618
         }
