@@ -12,7 +12,7 @@ namespace StudentRegistrationProgramWithDBConnection.DTOs
             optionsBuilder.UseSqlServer(new ConfigurationBuilder()
                 .AddJsonFile("Configurations/appsettings.json")
                 .Build()
-                .GetSection("ConnectionStrings")["FoerdjupningApplicationDb"]);
+                .GetSection("ConnectionStrings")["Part2ApplicationDb"]);
         }
     }
 }
